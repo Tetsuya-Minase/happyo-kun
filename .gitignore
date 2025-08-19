@@ -69,7 +69,7 @@ coverage/
 # package lock files (choose one based on your preference)
 package-lock.json
 yarn.lock
-pnpm-lock.yaml
+# pnpm-lock.yaml (keep pnpm lock file)
 
 # database
 *.db
@@ -86,3 +86,7 @@ __pycache__/
 # backup files
 *.bak
 *.backup
+
+# Slidev specific
+.slidev
+.vite
