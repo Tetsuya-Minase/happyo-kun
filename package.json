@@ -1,0 +1,15 @@
+{
+  "name": "happyo-kun",
+  "version": "1.0.0",
+  "private": true,
+  "description": "🎯 Your presentation buddy - Interactive slides with live coding powered by Slidev & Cloudflare",
+  "scripts": {
+    "dev": "pnpm --filter slide dev",
+    "build": "pnpm --filter slide build",
+    "preview": "pnpm --filter slide preview"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
