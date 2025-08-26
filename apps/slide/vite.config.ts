@@ -10,7 +10,8 @@ export default defineConfig({
   },
   slidev: {
     build: {
-      out: 'dist'
+      out: 'dist',
+      redirects: false
     }
   }
 })
