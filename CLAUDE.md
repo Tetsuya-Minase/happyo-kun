@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## IMPORTANT
+PLEASE ANSWER IN JAPANESE.
+
 ## Project Overview
 
 **happyo-kun** (発表くん) is an interactive slide application that combines Slidev with Cloudflare's infrastructure. The project aims to create Markdown-driven presentations with live coding capabilities and API integration.
