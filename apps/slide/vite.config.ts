@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  base: './',
   define: {
     __API_URL__: JSON.stringify(
       process.env.NODE_ENV === 'production' 
