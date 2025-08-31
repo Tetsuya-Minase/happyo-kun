@@ -4,9 +4,11 @@
   "private": true,
   "description": "🎯 Your presentation buddy - Interactive slides with live coding powered by Slidev & Cloudflare",
   "scripts": {
-    "dev": "pnpm --filter slide dev",
-    "build": "pnpm --filter slide build",
-    "preview": "pnpm --filter slide preview"
+    "dev": "pnpm --filter start dev",
+    "build": "pnpm --filter start build && pnpm --filter slide build && cp -r apps/slide/dist apps/start/dist/slide",
+    "preview": "pnpm --filter start preview",
+    "dev:slide": "pnpm --filter slide dev",
+    "dev:start": "pnpm --filter start dev"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

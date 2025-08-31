@@ -33,6 +33,12 @@ importers:
         specifier: ^5.0.0
         version: 5.4.19(@types/node@22.17.2)
 
+  apps/start:
+    devDependencies:
+      vite:
+        specifier: ^5.0.0
+        version: 5.4.19(@types/node@22.17.2)
+
 packages:
 
   '@ampproject/remapping@2.3.0':
