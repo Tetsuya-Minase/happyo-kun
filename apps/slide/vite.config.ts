@@ -8,10 +8,4 @@ export default defineConfig({
         : 'http://localhost:8788/api'
     )
   },
-  slidev: {
-    build: {
-      out: 'dist',
-      redirects: false
-    }
-  }
 })
