@@ -5,7 +5,7 @@
   "description": "🎯 Your presentation buddy - Interactive slides with live coding powered by Slidev & Cloudflare",
   "scripts": {
     "dev": "pnpm --filter start dev",
-    "build": "pnpm --filter start build && pnpm --filter slide build && cp -r apps/slide/dist apps/start/dist/slide",
+    "build": "pnpm --filter start build && pnpm --filter slide build && cp -r apps/slide/dist apps/start/dist/slide && cp -r apps/slide/functions apps/start/dist/functions",
     "preview": "pnpm --filter start preview",
     "dev:slide": "pnpm --filter slide dev",
     "dev:start": "pnpm --filter start dev"
