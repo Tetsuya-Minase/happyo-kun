@@ -82,7 +82,7 @@ async function main(): Promise<void> {
     // 6. Create _redirects file for SPA routing
     const redirectsContent = `
 # Slide files (Slidev built files)
-/slide/*   /slide/:splat   200
+/slide/*   /slide/index.html   200
 
 # Fallback to home for other routes
 /*         /index.html         200
