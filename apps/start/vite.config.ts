@@ -23,19 +23,23 @@ function injectSlidesList() {
   }
 }
 
-export default defineConfig({
-  server: {
-    port: 3000,
-    proxy: {
-      '/slide': {
-        target: 'http://localhost:3030',
-        changeOrigin: true,
-      },
-    }
-  },
-  build: {
-    outDir: 'dist'
-  },
-  publicDir: 'public',
-  plugins: [injectSlidesList()],
+export default defineConfig(({ command }) => {
+  return {
+    server: {
+      port: 3000,
+      ...(command === 'serve' && {
+        proxy: {
+          '/slide': {
+            target: 'http://localhost:3030',
+            changeOrigin: true,
+          },
+        }
+      })
+    },
+    build: {
+      outDir: 'dist'
+    },
+    publicDir: 'public',
+    plugins: [injectSlidesList()],
+  }
 })
