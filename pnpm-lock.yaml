@@ -43,10 +43,23 @@ importers:
         version: 5.4.19(@types/node@22.17.2)
 
   apps/start:
+    dependencies:
+      '@slidev/cli':
+        specifier: 52.1.0
+        version: 52.1.0(@babel/parser@7.28.3)(@nuxt/kit@3.18.1)(@types/markdown-it@14.1.2)(@types/node@22.17.2)(@vue/compiler-sfc@3.5.18)(markdown-it-async@2.2.0)(postcss@8.5.6)(tsx@4.20.5)
+      '@slidev/theme-default':
+        specifier: latest
+        version: 0.25.0
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20240925.0
+        version: 4.20250819.0
       vite:
         specifier: ^5.0.0
         version: 5.4.19(@types/node@22.17.2)
+      zx:
+        specifier: ^8.8.1
+        version: 8.8.1
 
 packages:
 
@@ -700,6 +713,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@shikijs/core@3.12.2':
+    resolution: {integrity: sha512-L1Safnhra3tX/oJK5kYHaWmLEBJi1irASwewzY3taX5ibyXyMkkSDZlq01qigjryOBwrXSdFgTiZ3ryzSNeu7Q==}
+
   '@shikijs/core@3.9.2':
     resolution: {integrity: sha512-3q/mzmw09B2B6PgFNeiaN8pkNOixWS726IHmJEpjDAcneDPMQmUg2cweT9cWXY4XcyQS3i6mOOUgQz9RRUP6HA==}
 
@@ -726,10 +742,18 @@ packages:
   '@shikijs/themes@3.9.2':
     resolution: {integrity: sha512-6z5lBPBMRfLyyEsgf6uJDHPa6NAGVzFJqH4EAZ+03+7sedYir2yJBRu2uPZOKmj43GyhVHWHvyduLDAwJQfDjA==}
 
+  '@shikijs/twoslash@3.12.2':
+    resolution: {integrity: sha512-JthKvEvyE/gbu3u693mhNhEO6GYP1vetrwgEfqTAsT/G9AJ6nf7g7JVqdTSs+axdfilGWzZKeYdjfyanu/v5AA==}
+    peerDependencies:
+      typescript: '>=5.5.0'
+
   '@shikijs/twoslash@3.9.2':
     resolution: {integrity: sha512-LRAhdZwp+4AXyScSgWAyoo1EM6lf2iTQPivl3w9fWSBi3yp4MJZfbed/6dcemd20jW4A9olzB3j1mFAKv/CRFw==}
     peerDependencies:
       typescript: '>=5.5.0'
+
+  '@shikijs/types@3.12.2':
+    resolution: {integrity: sha512-K5UIBzxCyv0YoxN3LMrKB9zuhp1bV+LgewxuVwHdl4Gz5oePoUFrr9EfgJlGlDeXCU1b/yhdnXeuRvAnz8HN8Q==}
 
   '@shikijs/types@3.9.2':
     resolution: {integrity: sha512-/M5L0Uc2ljyn2jKvj4Yiah7ow/W+DJSglVafvWAJ/b8AZDeeRAdMu3c2riDzB7N42VD+jSnWxeP9AKtd4TfYVw==}
@@ -3521,6 +3545,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.46.3':
     optional: true
 
+  '@shikijs/core@3.12.2':
+    dependencies:
+      '@shikijs/types': 3.12.2
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+      hast-util-to-html: 9.0.5
+
   '@shikijs/core@3.9.2':
     dependencies:
       '@shikijs/types': 3.9.2
@@ -3560,6 +3591,15 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.9.2
 
+  '@shikijs/twoslash@3.12.2(typescript@5.9.2)':
+    dependencies:
+      '@shikijs/core': 3.12.2
+      '@shikijs/types': 3.12.2
+      twoslash: 0.3.4(typescript@5.9.2)
+      typescript: 5.9.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@shikijs/twoslash@3.9.2(typescript@5.9.2)':
     dependencies:
       '@shikijs/core': 3.9.2
@@ -3569,6 +3609,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@shikijs/types@3.12.2':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
   '@shikijs/types@3.9.2':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
@@ -3576,7 +3621,7 @@ snapshots:
 
   '@shikijs/vitepress-twoslash@3.9.2(@nuxt/kit@3.18.1)(typescript@5.9.2)':
     dependencies:
-      '@shikijs/twoslash': 3.9.2(typescript@5.9.2)
+      '@shikijs/twoslash': 3.12.2(typescript@5.9.2)
       floating-vue: 5.2.2(@nuxt/kit@3.18.1)(vue@3.5.18(typescript@5.9.2))
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0

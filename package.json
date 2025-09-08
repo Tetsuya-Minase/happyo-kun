@@ -4,10 +4,10 @@
   "private": true,
   "description": "🎯 Your presentation buddy - Interactive slides with live coding powered by Slidev & Cloudflare",
   "scripts": {
-    "dev": "concurrently \"pnpm:dev:start\" \"pnpm:dev:slide\"",
+    "dev": "pnpm --filter start dev",
     "build": "tsx scripts/build.ts",
     "preview": "pnpm --filter start preview",
-    "dev:slide": "pnpm --filter slide dev",
+    "dev:slide": "pnpm --filter slide dev --port 3030",
     "dev:start": "pnpm --filter start dev"
   },
   "devDependencies": {
