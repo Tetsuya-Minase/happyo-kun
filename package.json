@@ -4,12 +4,17 @@
   "private": true,
   "description": "🎯 Your presentation buddy - Interactive slides with live coding powered by Slidev & Cloudflare",
   "scripts": {
-    "dev": "pnpm --filter slide dev",
-    "build": "pnpm --filter slide build",
-    "preview": "pnpm --filter slide preview"
+    "dev": "concurrently \"pnpm:dev:start\" \"pnpm:dev:slide\"",
+    "build": "tsx scripts/build.ts",
+    "preview": "pnpm --filter start preview",
+    "dev:slide": "pnpm --filter slide dev --port 3030",
+    "dev:start": "pnpm --filter start dev"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "typescript": "^5.0.0"
+    "concurrently": "^9.2.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.0.0",
+    "zx": "^8.8.1"
   }
 }
