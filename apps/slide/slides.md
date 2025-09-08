@@ -1,6 +1,5 @@
 ---
 theme: default
-base: /slide/
 background: https://cover.sli.dev
 title: happyo-kun (発表くん)
 info: |

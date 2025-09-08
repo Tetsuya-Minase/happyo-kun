@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, ProxyOptions } from 'vite'
 import { getSlides } from './get-slides.ts'
 
 // Custom plugin to inject the slide list into index.html
@@ -23,18 +23,19 @@ function injectSlidesList() {
   }
 }
 
+const devProxy: Record<string, string | ProxyOptions> = {
+  '/slide': {
+    target: 'http://localhost:3030',
+    changeOrigin: true,
+    ws: true, // forward websockets for HMR
+  },
+}
+
 export default defineConfig(({ command }) => {
   return {
     server: {
       port: 3000,
-      ...(command === 'serve' && {
-        proxy: {
-          '/slide': {
-            target: 'http://localhost:3030',
-            changeOrigin: true,
-          },
-        }
-      })
+      proxy: command === 'serve' ? devProxy : undefined,
     },
     build: {
       outDir: 'dist'
