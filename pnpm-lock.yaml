@@ -43,13 +43,6 @@ importers:
         version: 5.4.19(@types/node@22.17.2)
 
   apps/start:
-    dependencies:
-      '@slidev/cli':
-        specifier: 52.1.0
-        version: 52.1.0(@babel/parser@7.28.3)(@nuxt/kit@3.18.1)(@types/markdown-it@14.1.2)(@types/node@22.17.2)(@vue/compiler-sfc@3.5.18)(markdown-it-async@2.2.0)(postcss@8.5.6)(tsx@4.20.5)
-      '@slidev/theme-default':
-        specifier: latest
-        version: 0.25.0
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20240925.0
