@@ -7,21 +7,24 @@ const rootDir: string = process.cwd();
 const appsDir: string = path.join(rootDir, 'apps');
 const startDistDir: string = path.join(appsDir, 'start', 'dist');
 
-async function copySlideDistToBuild(distDir: string): Promise<void> {
+async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promise<void> {
   try {
     console.log('📋 Copying Slidev built files to integrated build...');
-    
-    const slideDistPath = path.join(appsDir, 'slide', 'dist');
-    if (!(await fs.pathExists(slideDistPath))) {
-      console.log('⚠️  Slidev dist not found. Building slide app first...');
-      await $`pnpm --filter slide build`;
+
+    for (const slideDir of slideDirs) {
+      const slideDistPath = path.join(appsDir, slideDir, 'dist');
+      if (!(await fs.pathExists(slideDistPath))) {
+        console.log(`⚠️  ${slideDir} dist not found. Skipping...`);
+        continue;
+      }
+
+      // Copy slide dist to /{slideDir} path in start dist
+      const slideTargetPath = path.join(distDir, slideDir);
+      await fs.copy(slideDistPath, slideTargetPath, { overwrite: true });
+      console.log(`📋 Copied ${slideDir} files to ${slideDir}/`);
     }
 
-    // Copy slide dist to /slide path in start dist
-    const slideTargetPath = path.join(distDir, 'slide');
-    await fs.copy(slideDistPath, slideTargetPath, { overwrite: true });
-    
-    console.log('📋 Copied Slidev files successfully.');
+    console.log('📋 All Slidev files copied successfully.');
   } catch (error) {
     console.error('❌ Error copying slide files:', error);
   }
@@ -77,12 +80,15 @@ async function main(): Promise<void> {
     }
 
     // 5. Copy slide dist files to integrated build
-    await copySlideDistToBuild(startDistDir);
-    
+    await copySlideDistToBuild(startDistDir, slideDirs);
+
     // 6. Create _redirects file for SPA routing
+    const redirectRules = slideDirs.map(slideDir =>
+      `# ${slideDir} files (Slidev built files)\n/${slideDir}/*   /${slideDir}/index.html   200`
+    ).join('\n\n');
+
     const redirectsContent = `
-# Slide files (Slidev built files)
-/slide/*   /slide/index.html   200
+${redirectRules}
 
 # Fallback to home for other routes
 /*         /index.html         200

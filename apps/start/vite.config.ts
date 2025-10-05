@@ -50,7 +50,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  // Ensure preview serves /slide/* to /slide/index.html for integrated build preview
+  // Ensure preview serves /slide*/* to /slide*/index.html for integrated build preview
   plugins: [
     injectSlidesList(),
     {
@@ -58,11 +58,13 @@ export default defineConfig({
       configurePreviewServer(server) {
         server.middlewares.use((req, res, next) => {
           const url = req.url || ''
-          // Bypass assets and files with extensions; rewrite HTML routes under /slide
-          const isSlideRoute = url === '/slide' || url.startsWith('/slide/')
           const hasExt = /\.[^/]+$/.test(url)
-          if (isSlideRoute && !hasExt) {
-            const slideIndexPath = path.resolve(__dirname, 'dist', 'slide', 'index.html')
+
+          // Check if URL matches /slide*/ pattern (any directory starting with 'slide')
+          const slideMatch = url.match(/^\/(slide[^/]*)(\/.*)?$/)
+          if (slideMatch && !hasExt) {
+            const slideDir = slideMatch[1] // e.g., 'slide', 'slide-new', etc.
+            const slideIndexPath = path.resolve(__dirname, 'dist', slideDir, 'index.html')
             if (fs.existsSync(slideIndexPath)) {
               res.setHeader('Content-Type', 'text/html; charset=utf-8')
               res.end(fs.readFileSync(slideIndexPath))
