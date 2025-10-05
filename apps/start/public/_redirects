@@ -1,0 +1,8 @@
+# Handle slide directory access
+/slide /slide/ 302
+
+# Handle API routes (preserve for slide app functions)
+/api/* /slide/api/:splat 200
+
+# SPA fallback for the slide deck to handle reloads
+/slide/* /slide/index.html 200

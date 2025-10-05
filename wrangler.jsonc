@@ -2,6 +2,6 @@
   "name": "happyo-kun",
   "compatibility_date": "2025-08-25",
   "assets": {
-    "directory": "apps/slide/dist"
+    "directory": "apps/start/dist"
   }
 }
