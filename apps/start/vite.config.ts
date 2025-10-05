@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import fs from 'fs'
+import { getSlides } from './get-slides'
 
 // Custom plugin to inject the slide list into index.html
 function injectSlidesList() {
@@ -8,19 +9,37 @@ function injectSlidesList() {
     name: 'inject-slides-list',
     async transformIndexHtml(html) {
       const isDev = process.env.NODE_ENV !== 'production'
-      // In dev, point to Slidev dev server; in prod/preview, use integrated path
-      const slideBase = isDev ? 'http://localhost:3030/slide/' : '/slide/'
-      const presenterBase = isDev ? 'http://localhost:3030/slide/presenter/' : '/slide/presenter/'
-      const slidesHtml = `
-        <div class="slide-card">
-            <h3>happyo-kun スライド</h3>
-            <p>インタラクティブなプレゼンテーション体験</p>
+
+      // slide*で始まるディレクトリを動的に検出
+      const slides = await getSlides()
+
+      if (slides.length === 0) {
+        const noSlidesHtml = `
+          <div class="slide-card">
+            <h3>スライドが見つかりません</h3>
+            <p>apps/配下にslide*で始まるディレクトリを作成してください</p>
+          </div>
+        `;
+        return html.replace('<!--SLIDE_LIST-->', noSlidesHtml);
+      }
+
+      // 各スライドのHTMLを生成
+      const slidesHtml = slides.map(slide => {
+        // In dev, point to Slidev dev server; in prod/preview, use integrated path
+        const slideBase = isDev ? `http://localhost:3030/${slide.dirName}/` : `/${slide.dirName}/`
+        const presenterBase = isDev ? `http://localhost:3030/${slide.dirName}/presenter/` : `/${slide.dirName}/presenter/`
+
+        return `
+          <div class="slide-card">
+            <h3>${slide.name}</h3>
+            <p>${slide.description}</p>
             <div class="card-actions">
-                <a href="${slideBase}" class="btn btn-primary" target="_blank">スライドを開く</a>
-                <a href="${presenterBase}" class="btn btn-secondary" target="_blank">プレゼンターモード</a>
+              <a href="${slideBase}" class="btn btn-primary" target="_blank">スライドを開く</a>
+              <a href="${presenterBase}" class="btn btn-secondary" target="_blank">プレゼンターモード</a>
             </div>
-        </div>
-      `;
+          </div>
+        `;
+      }).join('\n');
 
       return html.replace('<!--SLIDE_LIST-->', slidesHtml);
     }
