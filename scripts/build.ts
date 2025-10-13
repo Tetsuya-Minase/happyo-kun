@@ -20,7 +20,10 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
 
       // Copy slide dist to /{slideDir} path in start dist
       const slideTargetPath = path.join(distDir, slideDir);
-      await fs.copy(slideDistPath, slideTargetPath, { overwrite: true });
+      await fs.copy(slideDistPath, slideTargetPath, {
+        overwrite: true,
+        filter: (src) => !src.endsWith('_redirects')
+      });
       console.log(`📋 Copied ${slideDir} files to ${slideDir}/`);
     }
 
@@ -82,20 +85,9 @@ async function main(): Promise<void> {
     // 5. Copy slide dist files to integrated build
     await copySlideDistToBuild(startDistDir, slideDirs);
 
-    // 6. Create _redirects file for SPA routing
-    const redirectRules = slideDirs.map(slideDir =>
-      `# Handle ${slideDir} paths - rewrite to ${slideDir} index (SPA support)\n/${slideDir}/*   /${slideDir}/index.html   200`
-    ).join('\n\n');
-
-    const redirectsContent = `
-${redirectRules}
-
-# Handle root paths - rewrite to home (SPA support)
-/*         /index.html         200
-`;
-    const redirectsPath = path.join(startDistDir, '_redirects');
-    await fs.writeFile(redirectsPath, redirectsContent.trim());
-    console.log('📄 Created _redirects file for SPA routing.');
+    // Note: _redirects file is not needed for Cloudflare Pages
+    // Cloudflare Pages automatically handles SPA routing without _redirects
+    console.log('📄 Skipping _redirects file creation (not needed for Cloudflare Pages).');
 
     console.log('\n✅ Integrated build completed successfully!');
     console.log(`📂 Output directory: ${startDistDir}`);
