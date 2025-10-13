@@ -84,14 +84,14 @@ async function main(): Promise<void> {
 
     // 6. Create _redirects file for SPA routing
     const redirectRules = slideDirs.map(slideDir =>
-      `# ${slideDir} files (Slidev built files)\n/${slideDir}/*   /${slideDir}/index.html   200`
+      `# Handle 404s within ${slideDir} paths - rewrite to ${slideDir} index\n/${slideDir}/*   /${slideDir}/index.html   404`
     ).join('\n\n');
 
     const redirectsContent = `
 ${redirectRules}
 
-# Fallback to home for other routes
-/*         /index.html         200
+# Handle 404s for root paths - rewrite to home
+/*         /index.html         404
 `;
     const redirectsPath = path.join(startDistDir, '_redirects');
     await fs.writeFile(redirectsPath, redirectsContent.trim());
