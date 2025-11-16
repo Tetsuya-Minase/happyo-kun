@@ -25,18 +25,26 @@ function injectSlidesList() {
         return html.replace('<!--SLIDE_LIST-->', noSlidesHtml);
       }
 
-      // presentations/ 内の .md ファイルをスキャンしてスライドリストを生成
-      const presentationsPath = path.join(appsDir, 'slide', 'presentations');
+      // slides/ 内のディレクトリをスキャンしてスライドリストを生成
+      const slidesPath = path.join(appsDir, 'slide', 'slides');
       const presentations: { name: string; description: string }[] = [];
 
-      if (existsSync(presentationsPath)) {
-        const files = readdirSync(presentationsPath);
-        for (const file of files) {
-          if (file.endsWith('.md')) {
-            const slideName = path.basename(file, '.md');
+      if (existsSync(slidesPath)) {
+        const entries = readdirSync(slidesPath);
+        for (const entry of entries) {
+          const entryPath = path.join(slidesPath, entry);
+
+          // ディレクトリのみ処理
+          if (!fs.statSync(entryPath).isDirectory()) {
+            continue;
+          }
+
+          // slides.md の存在確認
+          const mdPath = path.join(entryPath, 'slides.md');
+          if (existsSync(mdPath)) {
             presentations.push({
-              name: slideName,
-              description: `${slideName} プレゼンテーション`
+              name: entry,
+              description: `${entry} プレゼンテーション`
             });
           }
         }

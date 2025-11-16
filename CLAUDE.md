@@ -17,9 +17,13 @@ This is implemented as a **pnpm workspace monorepo** with the following structur
 happyo-kun/
 ├── apps/
 │   ├── slide/                    # Slidev application (main app)
-│   │   ├── presentations/       # Multiple slide presentations
-│   │   │   ├── intro.md         # Introduction slide (accessible at /intro/)
-│   │   │   └── demo.md          # Demo slide (accessible at /demo/)
+│   │   ├── slides/              # Multiple slide presentations (directory-based structure)
+│   │   │   ├── intro/           # Introduction slide directory
+│   │   │   │   ├── slides.md    # Slide content (accessible at /intro/)
+│   │   │   │   └── assets/      # Slide-specific assets (images, CSS, etc.)
+│   │   │   └── demo/            # Demo slide directory
+│   │   │       ├── slides.md    # Slide content (accessible at /demo/)
+│   │   │       └── assets/      # Slide-specific assets
 │   │   ├── components/          # Shared Vue components
 │   │   │   ├── CssPlayground.vue # Real-time CSS editor
 │   │   │   └── ApiDemo.vue      # API demonstration component
@@ -74,7 +78,7 @@ pnpm build                  # Builds all slides and integrates them into apps/st
 pnpm preview
 
 # Build individual slide
-pnpm --filter slide build   # Builds all presentations in presentations/ folder
+pnpm --filter slide build   # Builds all presentations in slides/ folder
 
 # Export slides
 pnpm --filter slide export
@@ -83,9 +87,10 @@ pnpm --filter slide export
 ## Key Features (Implemented)
 
 1. **Multiple Presentations**: Support for multiple independent slide presentations
-   - Each `.md` file in `presentations/` becomes a separate slide deck
-   - Access via `/【ファイル名】/【ページ数】` (e.g., `/intro/1`, `/demo/2`)
+   - Each directory in `slides/` with a `slides.md` file becomes a separate slide deck
+   - Access via `/【ディレクトリ名】/【ページ数】` (e.g., `/intro/1`, `/demo/2`)
    - Shared components and functions across all presentations
+   - Each presentation can have its own `assets/` directory for slide-specific resources
 2. **Interactive CSS Playground**: Real-time CSS editing component
 3. **API Integration**: Slide components that call backend APIs
 4. **Serverless Functions**: Cloudflare Pages Functions for API endpoints
@@ -107,10 +112,11 @@ pnpm --filter slide export
 
 - All API code is in `/apps/slide/functions/` directory (shared across all presentations)
 - Components in `/apps/slide/components/` are shared across all presentations
-- Each presentation is a separate `.md` file in `/apps/slide/presentations/`
+- Each presentation has its own directory in `/apps/slide/slides/` with a `slides.md` file
+- Each presentation can have its own `assets/` directory for slide-specific resources
 - Components follow Vue.js/Slidev conventions
 - Shared types are available from `/apps/shared/types/`
-- Built files are generated in `/apps/slide/dist/【ファイル名】/` for each presentation
+- Built files are generated in `/apps/slide/dist/【ディレクトリ名】/` for each presentation
 - Final integrated build is in `/apps/start/dist/` with all presentations merged
 
 ## Testing & Development
@@ -121,10 +127,12 @@ pnpm --filter slide export
 
 ## How to Add a New Presentation
 
-1. Create a new `.md` file in `/apps/slide/presentations/` (e.g., `workshop.md`)
-2. Write your slide content using Slidev markdown syntax
-3. Run `pnpm build` to build all presentations
-4. The new presentation will be accessible at `/workshop/1`, `/workshop/2`, etc.
+1. Create a new directory in `/apps/slide/slides/` (e.g., `workshop/`)
+2. Create a `slides.md` file in the new directory (`/apps/slide/slides/workshop/slides.md`)
+3. Optionally, create an `assets/` directory for slide-specific resources
+4. Write your slide content using Slidev markdown syntax
+5. Run `pnpm build` to build all presentations
+6. The new presentation will be accessible at `/workshop/1`, `/workshop/2`, etc.
 
 ## Current Status
 
