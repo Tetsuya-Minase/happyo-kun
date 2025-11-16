@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import fs from 'fs'
+import { existsSync, readdirSync } from 'fs'
 import { getSlides } from './get-slides'
 
 // Custom plugin to inject the slide list into index.html
@@ -9,6 +10,7 @@ function injectSlidesList() {
     name: 'inject-slides-list',
     async transformIndexHtml(html) {
       const isDev = process.env.NODE_ENV !== 'production'
+      const appsDir = path.join(__dirname, '..')
 
       // slide*で始まるディレクトリを動的に検出
       const slides = await getSlides()
@@ -23,11 +25,28 @@ function injectSlidesList() {
         return html.replace('<!--SLIDE_LIST-->', noSlidesHtml);
       }
 
+      // presentations/ 内の .md ファイルをスキャンしてスライドリストを生成
+      const presentationsPath = path.join(appsDir, 'slide', 'presentations');
+      const presentations: { name: string; description: string }[] = [];
+
+      if (existsSync(presentationsPath)) {
+        const files = readdirSync(presentationsPath);
+        for (const file of files) {
+          if (file.endsWith('.md')) {
+            const slideName = path.basename(file, '.md');
+            presentations.push({
+              name: slideName,
+              description: `${slideName} プレゼンテーション`
+            });
+          }
+        }
+      }
+
       // 各スライドのHTMLを生成
-      const slidesHtml = slides.map(slide => {
+      const slidesHtml = presentations.map(slide => {
         // In dev, point to Slidev dev server; in prod/preview, use integrated path
-        const slideBase = isDev ? `http://localhost:3030/${slide.dirName}/` : `/${slide.dirName}/`
-        const presenterBase = isDev ? `http://localhost:3030/${slide.dirName}/presenter/` : `/${slide.dirName}/presenter/`
+        const slideBase = isDev ? `http://localhost:3030/` : `/${slide.name}/`
+        const presenterBase = isDev ? `http://localhost:3030/presenter/` : `/${slide.name}/presenter/`
 
         return `
           <div class="slide-card">
@@ -60,11 +79,12 @@ export default defineConfig({
           const url = req.url || ''
           const hasExt = /\.[^/]+$/.test(url)
 
-          // Check if URL matches /slide*/ pattern (any directory starting with 'slide')
-          const slideMatch = url.match(/^\/(slide[^/]*)(\/.*)?$/)
-          if (slideMatch && !hasExt) {
-            const slideDir = slideMatch[1] // e.g., 'slide', 'slide-new', etc.
-            const slideIndexPath = path.resolve(__dirname, 'dist', slideDir, 'index.html')
+          // Check if URL matches any presentation name pattern
+          // e.g., /intro/1, /demo/2, etc.
+          const presentationMatch = url.match(/^\/([^/]+)(\/.*)?$/)
+          if (presentationMatch && !hasExt) {
+            const presentationName = presentationMatch[1]
+            const slideIndexPath = path.resolve(__dirname, 'dist', presentationName, 'index.html')
             if (fs.existsSync(slideIndexPath)) {
               res.setHeader('Content-Type', 'text/html; charset=utf-8')
               res.end(fs.readFileSync(slideIndexPath))
