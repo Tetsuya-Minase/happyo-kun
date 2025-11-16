@@ -18,13 +18,21 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
         continue;
       }
 
-      // Copy slide dist to /{slideDir} path in start dist
-      const slideTargetPath = path.join(distDir, slideDir);
-      await fs.copy(slideDistPath, slideTargetPath, {
-        overwrite: true,
-        filter: (src) => !src.endsWith('_redirects')
-      });
-      console.log(`📋 Copied ${slideDir} files to ${slideDir}/`);
+      // slide/dist 内の各サブディレクトリ (intro, demo など) を start/dist にコピー
+      const slideDirs = await fs.readdir(slideDistPath);
+      for (const subDir of slideDirs) {
+        const subDirPath = path.join(slideDistPath, subDir);
+        const stat = await fs.stat(subDirPath);
+
+        if (stat.isDirectory()) {
+          const targetPath = path.join(distDir, subDir);
+          await fs.copy(subDirPath, targetPath, {
+            overwrite: true,
+            filter: (src) => !src.endsWith('_redirects')
+          });
+          console.log(`📋 Copied ${subDir}/ files to ${subDir}/`);
+        }
+      }
     }
 
     console.log('📋 All Slidev files copied successfully.');
