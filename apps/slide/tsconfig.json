@@ -18,6 +18,7 @@
     "components/**/*",
     "functions/**/*",
     "styles/**/*",
-    "public/**/*"
+    "public/**/*",
+    "setup/**/*"
   ]
 }

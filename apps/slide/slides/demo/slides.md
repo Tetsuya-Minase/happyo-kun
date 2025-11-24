@@ -13,6 +13,10 @@ transition: slide-left
 mdc: true
 ---
 
+<script setup>
+import TerminalWindow from '../../components/TerminalWindow.vue'
+</script>
+
 # Demo Presentation
 
 🎨 デモプレゼンテーション
@@ -36,6 +40,17 @@ mdc: true
 🔗 **個別のURL** - `/スライド名/ページ番号` でアクセス可能
 
 🎯 **共有リソース** - components と functions は全スライドで共有
+
+<div class="mt-8 flex justify-center">
+  <TerminalWindow
+    title="bash"
+    :default-content="`$ cd apps/slide/slides
+$ ls
+demo/  intro/
+$ cat demo/slides.md
+🎨 デモプレゼンテーション`"
+  />
+</div>
 
 ---
 

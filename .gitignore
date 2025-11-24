@@ -90,3 +90,6 @@ __pycache__/
 # Slidev specific
 .slidev
 .vite
+
+# ai files
+.mcp.json
