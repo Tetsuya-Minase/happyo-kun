@@ -17,7 +17,8 @@ happyo-kun/
 │   │   │       └── assets/    # スライド固有のアセット
 │   │   ├── components/        # 共有Vueコンポーネント
 │   │   │   ├── ApiDemo.vue    # API統合デモコンポーネント
-│   │   │   └── CssPlayground.vue  # リアルタイムCSSエディタ
+│   │   │   ├── CssPlayground.vue  # リアルタイムCSSエディタ
+│   │   │   └── TerminalWindow.vue  # ターミナルシミュレーションコンポーネント
 │   │   ├── functions/         # 共有Cloudflare Pages Functions
 │   │   │   ├── _middleware.ts # セキュリティミドルウェア
 │   │   │   └── api/           # APIエンドポイント
@@ -29,9 +30,15 @@ happyo-kun/
 │   │   ├── build-slides.ts    # 複数スライドビルドスクリプト
 │   │   ├── vite.config.ts     # Vite設定
 │   │   ├── tsconfig.json      # TypeScript設定
+│   │   ├── .env.example       # 環境変数テンプレート
 │   │   └── package.json       # slideアプリのパッケージ設定
 │   ├── start/                 # ランディングページアプリケーション
 │   │   ├── index.html         # メインランディングページ
+│   │   ├── style.css          # ランディングページスタイル
+│   │   ├── get-slides.ts      # スライドメタデータ取得ユーティリティ
+│   │   ├── components/        # ランディングページコンポーネント（現在は空）
+│   │   ├── public/            # 公開アセット
+│   │   │   └── 404.html       # カスタム404エラーページ
 │   │   ├── dist/              # 統合ビルド出力
 │   │   ├── vite.config.ts     # Vite設定
 │   │   └── package.json       # startアプリのパッケージ設定
@@ -46,6 +53,8 @@ happyo-kun/
 │   └── build.ts               # 統合ビルドスクリプト
 ├── .gitignore                 # Git除外設定
 ├── pnpm-workspace.yaml        # pnpm ワークスペース設定
+├── wrangler.jsonc             # Cloudflare Wrangler設定
+├── .mcp.json                  # MCP (Model Context Protocol) 設定
 ├── package.json               # ルートパッケージ設定
 ├── CLAUDE.md                  # Claude Code向けガイダンス
 └── LICENSE                    # ライセンス
@@ -73,9 +82,14 @@ happyo-kun/
 
 ### apps/start/ (ランディングページ)
 - **index.html**: メインのランディングページ
+- **style.css**: ランディングページのスタイルシート
+- **get-slides.ts**: `slide*` で始まるディレクトリをスキャンしてメタデータを取得
+- **components/**: ランディングページ専用コンポーネント（現在は空）
+- **public/404.html**: カスタム404エラーページ
 - **dist/**: 最終的な統合ビルド出力ディレクトリ
   - slideアプリのビルド結果がここにコピーされる
   - functionsディレクトリもここにコピーされる
+- **vite.config.ts**: Vite設定
 
 ### apps/shared/ (共有コード)
 - **types/**: プロジェクト全体で使用する型定義
@@ -131,6 +145,11 @@ happyo-kun/
 1. `apps/slide/components/` に新しい `.vue` ファイルを作成
 2. `<script setup lang="ts">` を使用
 3. すべてのプレゼンテーションから自動的に利用可能
+
+### 利用可能なコンポーネント
+- **CssPlayground.vue**: リアルタイムCSSエディタ
+- **ApiDemo.vue**: API統合デモコンポーネント
+- **TerminalWindow.vue**: ターミナルシミュレーションコンポーネント
 
 ## デプロイメント構造
 - **本番環境**: Cloudflare Pages

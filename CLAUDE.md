@@ -25,8 +25,9 @@ happyo-kun/
 │   │   │       ├── slides.md    # Slide content (accessible at /demo/)
 │   │   │       └── assets/      # Slide-specific assets
 │   │   ├── components/          # Shared Vue components
-│   │   │   ├── CssPlayground.vue # Real-time CSS editor
-│   │   │   └── ApiDemo.vue      # API demonstration component
+│   │   │   ├── CssPlayground.vue    # Real-time CSS editor
+│   │   │   ├── ApiDemo.vue          # API demonstration component
+│   │   │   └── TerminalWindow.vue   # Terminal simulation component
 │   │   ├── functions/           # Shared Cloudflare Pages Functions
 │   │   │   ├── _middleware.ts   # Security middleware
 │   │   │   └── api/             # API endpoints
@@ -37,20 +38,35 @@ happyo-kun/
 │   │   │   └── demo/            # Built demo slide
 │   │   ├── build-slides.ts      # Multi-slide build script
 │   │   ├── vite.config.ts       # Vite configuration
+│   │   ├── tsconfig.json        # TypeScript configuration
+│   │   ├── .env.example         # Environment variable template
 │   │   └── package.json
 │   ├── start/                   # Landing page application
 │   │   ├── index.html           # Main landing page
-│   │   └── dist/                # Integrated build output
+│   │   ├── style.css            # Landing page styles
+│   │   ├── get-slides.ts        # Utility to retrieve slide metadata
+│   │   ├── components/          # Landing page components (currently empty)
+│   │   ├── public/              # Public assets
+│   │   │   └── 404.html         # Custom 404 error page
+│   │   ├── dist/                # Integrated build output
+│   │   ├── vite.config.ts       # Vite configuration
+│   │   └── package.json
 │   └── shared/                  # Shared code and types
 │       ├── types/               # TypeScript type definitions
 │       │   └── index.ts
-│       └── utils/               # Common utilities
-│           └── api.ts
+│       ├── utils/               # Common utilities
+│       │   └── api.ts
+│       └── package.json
 ├── .github/workflows/           # GitHub Actions for CI/CD
 ├── docs/                        # Project documentation
 ├── scripts/
 │   └── build.ts                 # Integrated build script
-└── pnpm-workspace.yaml         # pnpm workspace configuration
+├── .gitignore                   # Git ignore patterns
+├── pnpm-workspace.yaml          # pnpm workspace configuration
+├── wrangler.jsonc               # Cloudflare Wrangler configuration
+├── .mcp.json                    # MCP (Model Context Protocol) configuration
+├── CLAUDE.md                    # This file - guidance for Claude Code
+└── package.json                 # Root package configuration
 ```
 
 ## Technology Stack
@@ -92,10 +108,12 @@ pnpm --filter slide export
    - Shared components and functions across all presentations
    - Each presentation can have its own `assets/` directory for slide-specific resources
 2. **Interactive CSS Playground**: Real-time CSS editing component
-3. **API Integration**: Slide components that call backend APIs
-4. **Serverless Functions**: Cloudflare Pages Functions for API endpoints
-5. **Responsive Design**: Mobile-friendly presentation interface
-6. **CI/CD Pipeline**: GitHub Actions for automated deployment
+3. **Terminal Window**: Terminal simulation component for demonstrating CLI commands
+4. **API Integration**: Slide components that call backend APIs
+5. **Serverless Functions**: Cloudflare Pages Functions for API endpoints
+6. **Landing Page**: Dynamic landing page with slide metadata retrieval
+7. **Responsive Design**: Mobile-friendly presentation interface
+8. **CI/CD Pipeline**: GitHub Actions for automated deployment
 
 ## API Endpoints (Implemented)
 
@@ -139,9 +157,11 @@ pnpm --filter slide export
 The repository contains a fully functional implementation:
 - ✅ Multiple presentation support with shared components
 - ✅ Slidev-based presentation application
-- ✅ Vue.js components (CssPlayground, ApiDemo)
+- ✅ Vue.js components (CssPlayground, ApiDemo, TerminalWindow)
 - ✅ Cloudflare Pages Functions for API endpoints
 - ✅ Security middleware
 - ✅ CI/CD pipeline with GitHub Actions
 - ✅ pnpm workspace configuration
 - ✅ TypeScript throughout the project
+- ✅ Dynamic landing page with slide metadata retrieval
+- ✅ Custom 404 error page

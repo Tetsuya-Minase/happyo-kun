@@ -23,7 +23,7 @@
 - `computed()` を使用して計算プロパティを定義
 
 ### 命名規則
-- コンポーネント名: PascalCase (例: `ApiDemo.vue`, `CssPlayground.vue`)
+- コンポーネント名: PascalCase (例: `ApiDemo.vue`, `CssPlayground.vue`, `TerminalWindow.vue`)
 - 変数名: camelCase
 - 定数: camelCase
 - CSS クラス: kebab-case
