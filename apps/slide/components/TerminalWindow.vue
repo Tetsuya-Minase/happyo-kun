@@ -68,10 +68,9 @@ const handleMaximize = () => {
 <style scoped>
 .terminal-window {
   display: inline-block;
-  width: 356px;
-  min-width: 356px;
-  height: 200px;
-  min-height: 200px;
+  min-width: 300px;
+  max-width: 100%;
+  min-height: 150px;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -137,8 +136,7 @@ const handleMaximize = () => {
 
 .terminal-display {
   background: #000000;
-  height: 170px;
-  min-height: 170px;
+  min-height: 120px;
   padding: 12px;
   overflow-y: auto;
   color: #00ff00;
@@ -177,14 +175,12 @@ const handleMaximize = () => {
 @media (max-width: 768px) {
   .terminal-window {
     width: 100%;
-    max-width: 356px;
-    height: auto;
-    min-height: 200px;
+    min-width: 250px;
+    min-height: 150px;
   }
 
   .terminal-display {
-    height: auto;
-    min-height: 150px;
+    min-height: 100px;
   }
 }
 </style>
