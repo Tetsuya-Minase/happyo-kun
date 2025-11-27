@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsx build-slides.ts",
-    "dev": "slidev presentations/intro.md --open",
+    "dev": "slidev slides/genai-in-business/slides.md --open",
     "export": "slidev export"
   },
   "dependencies": {
