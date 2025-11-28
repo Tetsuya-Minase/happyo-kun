@@ -1,6 +1,6 @@
 ---
 theme: default
-background: ./assets/cover.png 
+background: ./assets/cover.png
 title: 「ChatGPTくん、仕事できるの？できないの？」—— 業務で使い倒した結果報告
 info: |
   生成AIを業務で使い倒した結果報告
@@ -1231,3 +1231,15 @@ pre, code {
 原案、原稿は私が書きましたがスライド化とかデザインとかやたら絵文字使ってくる表現とかは全部AIにお任せした結果になります。  
 ではご静聴いただきありがとうございました。
 -->
+
+---
+layout: center
+class: text-center
+---
+
+# Appendix
+
+---
+
+# 想定質問 1/2
+## 優しい感じの質問
