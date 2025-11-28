@@ -73,6 +73,14 @@ export default config
         // Slidev でビルド
         await $`npx slidev build ${slideInfo.mdPath} --base /${slideInfo.name}/ --out ${slideInfo.outputDir}`;
         console.log(`✅ ${slideInfo.name} のビルドが完了しました`);
+
+        // スライド固有のassetsディレクトリが存在する場合、ビルド出力にコピー
+        const slideAssetsDir = path.join(slideInfo.dirPath, 'assets');
+        if (await fs.pathExists(slideAssetsDir)) {
+          const distAssetsDir = path.join(slideInfo.outputDir, 'assets');
+          await fs.copy(slideAssetsDir, distAssetsDir, { overwrite: true });
+          console.log(`   📁 assetsディレクトリをコピーしました`);
+        }
       } finally {
         if (await fs.pathExists(tempConfigPath)) {
           await fs.remove(tempConfigPath);
