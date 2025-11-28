@@ -25,7 +25,7 @@
         {{ title }}
       </div>
     </div>
-    <div class="terminal-display" data-node-id="3:8">
+    <div class="terminal-display" :style="{ fontSize: fontSize }" data-node-id="3:8">
       <slot>
         <pre class="terminal-content">{{ defaultContent }}</pre>
       </slot>
@@ -39,11 +39,13 @@ import { defineProps, defineEmits } from 'vue'
 interface Props {
   title?: string
   defaultContent?: string
+  fontSize?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'DemoTitle',
-  defaultContent: '$ Welcome to Terminal\n$ Type your commands here...'
+  defaultContent: '$ Welcome to Terminal\n$ Type your commands here...',
+  fontSize: '12px'
 })
 
 const emit = defineEmits<{
@@ -140,7 +142,6 @@ const handleMaximize = () => {
   padding: 12px;
   overflow-y: auto;
   color: #00ff00;
-  font-size: 12px;
   line-height: 1.5;
   box-sizing: border-box;
 }

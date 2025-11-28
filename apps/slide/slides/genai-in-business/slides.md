@@ -1,6 +1,6 @@
 ---
 theme: default
-background: https://cover.sli.dev
+background: ./assets/cover.png 
 title: 「ChatGPTくん、仕事できるの？できないの？」—— 業務で使い倒した結果報告
 info: |
   生成AIを業務で使い倒した結果報告
@@ -10,16 +10,18 @@ drawings:
   enabled: true
 transition: slide-left
 mdc: true
+lineNumbers: true
+fonts:
+  sans: 'Noto Sans JP, sans-serif'
+  mono: 'Fira Code, monospace'
 ---
 
 # ChatGPTくん、仕事できるの？<br>できないの？
 
+<div class="white">
+
 業務で使い倒した結果報告
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
 </div>
 
 <!--
@@ -36,17 +38,16 @@ mdc: true
 - 💡 イントロダクション
 - 💻 コーディングでの利用
 - 🔍 コードレビューでの利用
-- 🔎 実装調査での利用
-- 📝 資料整理での利用
+- 🔎 調査タスクでの利用
 - 🤔 仕事で使えるの？
 - 📌 まとめ
 
 </div>
 
 <!--
-本日のアジェンダは記載の通りです。
-こんな感じのことを話していければと思います。
-タイトルでChatGPTくんと言っていますが、実際には色々な生成AIツールを業務で使ってみた結果を共有いたします。
+本日のアジェンダは記載の通りです。  
+こんな感じのことを話していければと思います。  
+ちなみにタイトルでChatGPTくんと言っていますが、実際には色々な生成AIツールを業務で使ってみた結果を共有いたします。
 -->
 
 ---
@@ -67,6 +68,13 @@ mdc: true
 - **2016/04〜** SIer
 - **2019/02〜** Web系企業
 
+<div class="mt-8">
+
+### SNS
+- <img src="./assets/XSocialIcon.png" alt="Xアイコン" class="inline w-5 h-5 mr-2" />他: @tminasen
+
+</div>
+
 </div>
 
 <div>
@@ -80,14 +88,13 @@ mdc: true
 
 </div>
 
-
 <!--
-簡単に自己紹介をさせて下さい。
-〇〇と申します。
-経歴としては3年弱SIerに勤めた後、Web系企業に転職し現在に至ります。
-やってきたこととしてはバックエンド、フロントエンド問わず開発を行ってきました。
-どちらかと言うとスキルセットととしてはフロントエンド寄りなので、バックエンドもやってると言う感じです。
-ここ数年はTech Leadみたいな役割をやらせてもらうことが多く、最近はプロダクトの開発を円滑に進めるために頑張ってます。
+簡単に自己紹介をさせて下さい。  
+〇〇と申します。  
+経歴としては3年弱SIerに勤めた後、Web系企業に転職し現在に至ります。  
+やってきたこととしてはバックエンド、フロントエンド問わず開発を行ってきました。  
+どちらかと言うとスキルセットととしてはフロントエンド寄りなので、バックエンドもやってると言う感じです。  
+ここ数年はTech Leadみたいな役割をやらせてもらうことが多く、最近はプロダクトの開発を円滑に進めるために頑張ってます。  
 -->
 
 ---
@@ -98,7 +105,7 @@ class: text-center
 # 💡 イントロダクション
 
 <!--
-カンペ：
+早速本題に入っていければと思います。
 -->
 
 ---
@@ -124,7 +131,7 @@ class: text-center
 <div v-click>
 
 <div class="mt-8 text-3xl text-orange-400 font-bold">
-<p style="line-height: 1.1;">やりたくないよね？<br>全部AIに頼んじゃおう 🚀</p>
+やりたくないよね？全部AIに頼んじゃおう 🚀
 </div>
 
 </div>
@@ -132,7 +139,24 @@ class: text-center
 </div>
 
 <!--
-カンペ：
+みなさん生成AI使ってますか？  
+個人的に使ってるよとか業務で使ってるよって方いますかね？  
+〜〜〜ちょっと反応見る〜〜〜
+ありがとうございます。  
+
+* 結果見ていい感じのこと言う
+  * やってる人多い： みんなやってるよね
+  * やってる人少ない： まだあんまり使ってる人いないよね
+
+ところで、みなさんこんな仕事ないですか？
+- 考えることが終わって実質作業やるだけのリファクタリング
+- テストコードの実装
+- 調査依頼
+- 資料作成
+などなど。
+
+楽しいものもあると思いますが、基本的にはちょっとやりたくないよな。と思うことが多いのでは無いでしょうか？
+そんな時は全部AIに頼んじゃいましょう！
 -->
 
 ---
@@ -147,7 +171,7 @@ class: text-center
 
 
 - 業務で生成AI使って良かったなと思ったこと
-- 簡単なデモ
+- 簡単な例の紹介
 
 </div>
 
@@ -164,7 +188,9 @@ class: text-center
 </div>
 
 <!--
-カンペ：
+今日お話ししようと思っていることと、話さないことについては記載の通りです。  
+実際業務で使って良かったなと思ったことと簡単な例の紹介を話せればと思います。  
+逆に、細かいAIツールの使い方やプロンプトの書き方、MCPなどについては今回は話しません。
 -->
 
 ---
@@ -175,16 +201,17 @@ class: text-center
 # 💻 コーディングでの利用
 
 <!--
-カンペ：
+では実際に良かった事例を紹介していければと思います。  
+まずはコーディング周りについてです。
 -->
 
 ---
 
-# 💻 コーディングでの利用 1/4
+# 💻 コーディングでの利用 1/10
 
 <div class="text-2xl mt-8">
 
-## 「あのAPIやあの処理と同じなんだよな...」
+## 👨‍💻「新しいAPI作ってって言われたけど、あの処理と同じなんだよな...」
 
 <v-clicks>
 
@@ -194,42 +221,36 @@ class: text-center
 
 </div>
 
-<div class="mt-8 text-lg text-gray-400">
-
-次のスライドでデモを見てみましょう
-
-</div>
-
 </v-clicks>
 
 </div>
 
 <!--
-カンペ：
+例えば業務において、新しいAPI作ってとかこんな機能欲しいなって言われることないですか？  
+しかもそれってあの機能の流用、改修でいけそうだよな〜ってなる時です。  
+まぁもし無かったらあったと言うことにしておいて下さい。  
+そんな時はAIに任せましょう。
 -->
 
 ---
 
-# 💻 コーディングでの利用 2/4
+# 💻 コーディングでの利用 2/10
 
 ## 🎯 デモ用コード（既存実装）
 
 <TerminalWindow title="UserController.ts" class="w-full">
 
 ```tsx
-// interface layer
 export class UserController {
-  constructor(private getUsersUseCase: GetUsersUseCase) {}
+  constructor(private readonly getUsersUseCase: GetUsersUseCase) {}
 
   async getUsers(req: Request, res: Response): Promise<void> {
     try {
       // クエリパラメータの取得
       const page = req.query.page ? parseInt(req.query.page as string, 10) : undefined;
       const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
-
       // ユースケースの実行
       const result = await this.getUsersUseCase.execute({ page, limit });
-
       // 成功レスポンス
       res.status(200).json(result);
     } catch (error) {
@@ -239,11 +260,45 @@ export class UserController {
           error: { message: error.message, code: 'BAD_REQUEST' }
         });
       } else {
-        res.status(500).json({
-          error: { message: '内部サーバーエラーが発生しました', code: 'INTERNAL_SERVER_ERROR' }
-        });
-      }
-    }
+        // その他ハンドリング
+```
+
+</TerminalWindow>
+
+<!--
+仮にこんな実装があったとして下さい。  
+TypeScript+ExpressでUser取得APIを実装しています。  
+こちらのAPIは4層のLayered Architectureになっており、Controllerからapplication層のUseCaseを呼び出してUserRepositoryを通じてDBからユーザー情報を取得しています。  
+ページングの機能が実装されていて、クエリパラメータでpageとlimitを受け取ってユーザー情報を返すAPIという感じです。  
+-->
+
+---
+
+<TerminalWindow title="GetUsersUseCase.ts" class="w-full">
+
+```ts
+export class GetUsersUseCase {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async execute(request: GetUsersRequest): Promise<GetUsersResponse> {
+    // デフォルト値の設定とバリデーション
+    const page = this.validatePage(request.page);
+    const limit = this.validateLimit(request.limit);
+    const params: PaginationParams = { page, limit };
+    // リポジトリからユーザーを取得
+    const result: PaginatedResult<User> = await this.userRepository.findAll(params);
+    // ドメインエンティティをDTOに変換
+    const users = result.data.map(user => this.toDTO(user));
+
+    return {
+      users,
+      pagination: {
+        total: result.total,
+        page: result.page,
+        limit: result.limit,
+        totalPages: result.totalPages,
+      },
+    };
   }
 }
 ```
@@ -251,12 +306,14 @@ export class UserController {
 </TerminalWindow>
 
 <!--
-カンペ：
+application層のUseCaseはこんな感じです。  
+domain/infrastructure層のUserRepositoryを通じてDBからユーザー情報を取得し、DTOに変換してレスポンスとして返すという感じです。  
+この辺の変換処理は良い感じにしてあげる何かが必要だったということにして下さい。  
 -->
 
 ---
 
-# 💻 コーディングでの利用 3/4
+# 💻 コーディングでの利用 3/10
 
 ## 📝 AIに投げたプロンプト
 
@@ -264,17 +321,33 @@ export class UserController {
 
 以下の修正を行なって下さい。
 
+```markdown
 # 要件
 * 現状のUser取得APIに認証あり版を作成して下さい
 * 基本的なロジックは同じでパスを変えて下さい
-* レスポンスに`isOwnProfile`という項目を追加し、
-  自分の情報であればtrueにして下さい
+* レスポンスに`isOwnProfile`という項目を追加し、 自分の情報であればtrueにして下さい
 * 認証ありはCookieからリクエストユーザのIdを取得して下さい
 * 認証なしは3分間のキャッシュできるようにして下さい
+```
 
 </TerminalWindow>
 
-<v-click>
+<!--
+例えばこのAPIの認証あり版を作って欲しいと頼まれた場合の話です。  
+要件としては「認証あり版では自分の情報であればフラグが欲しい」、「認証なし版はキャッシュに載せたい」だったとします。
+
+そんな時はこんなふうにAIに頼みます。  
+* 現状のUser取得APIに認証あり版を作成して下さい
+* 基本的なロジックは同じでパスを変えて下さい
+* レスポンスに`isOwnProfile`という項目を追加し、 自分の情報であればtrueにして下さい
+* 認証ありはCookieからリクエストユーザのIdを取得して下さい
+* 認証なしは3分間のキャッシュできるようにして下さい
+
+-->
+
+---
+
+# 💻 コーディングでの利用 4/10
 
 <div class="mt-8 text-xl text-green-400">
 
@@ -282,19 +355,123 @@ export class UserController {
 
 </div>
 
-</v-click>
+<TerminalWindow title="UserController.diff" class="w-full text-sm">
+
+```diff
+async getUsers(req: Request, res: Response): Promise<void> {
+    try {
+      const page = req.query.page ? parseInt(req.query.page as string, 10) : undefined;
+      const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+      const result = await this.getUsersUseCase.execute({ page, limit });
++     // 3分間のキャッシュヘッダーを追加
++     res.setHeader('Cache-Control', 'public, max-age=180');
+      res.status(200).json(result);
+    } catch (error) {
+      // ... エラーハンドリング（変更なし）
+    }
+  }
+```
+
+</TerminalWindow>
 
 <!--
-カンペ：
+結果どうなったかというとこんな修正をして要件を満たしたAPIを作ってくれます。  
+まずはコントローラーですね。  
+これは認証なし版の処理なので、レスポンスにCache-Controlヘッダーを追加して3分間のキャッシュを設定しています。
 -->
 
 ---
 
-# 💻 コーディングでの利用 4/4
+# 💻 コーディングでの利用 5/10
+
+<TerminalWindow title="UserController.ts" class="w-full text-sm">
+
+```ts
+async getAuthenticatedUsers(req: Request, res: Response): Promise<void> {
+  try {
+    // Cookieからユーザーidを取得
+    const requestUserId = req.cookies?.userId;
+    if (!requestUserId) {
+      // 〜認証周りのハンドリング〜
+      return;
+    }
+
+    // クエリパラメータの取得
+    const page = req.query.page ? parseInt(req.query.page as string, 10) : undefined;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+
+    // ユースケースの実行（認証あり）
+    const result = await this.getUsersUseCase.execute({
+      page,
+      limit,
+      requestUserId, // ← 認証情報を追加
+    });
+    // 成功レスポンス（認証あり版はキャッシュなし）
+    res.status(200).json(result);
+  } catch (error) {
+    // エラーハンドリング（getUsers と同様）
+  }
+}
+```
+
+</TerminalWindow>
+
+<!--
+さらにControllerにこんな感じの認証あり版の関数も生やしてくれます。  
+コードが長くなってしまうのでここでは省略させていただいていますが、エラーハンドリング系もちゃんと実装してくれています。
+-->
+
+---
+
+# 💻 コーディングでの利用 5/10
+
+<TerminalWindow title="GetUsersUseCase.diff" class="w-full">
+
+```diff
+  async execute(request: GetUsersRequest): Promise<GetUsersResponse | GetAuthenticatedUsersResponse> {
+    const page = this.validatePage(request.page);
+    const limit = this.validateLimit(request.limit);
+
+    const params: PaginationParams = { page, limit };
+
+    const result: PaginatedResult<User> = await this.userRepository.findAll(params);
+
+-   // 修正前: 常に toDTO を使用
+-   const users = result.data.map(user => this.toDTO(user));
+
++   // 修正後: 認証あり/なしで処理を分岐
++   const users = request.requestUserId
++     ? result.data.map(user => this.toAuthenticatedDTO(user, request.requestUserId!))
++     : result.data.map(user => this.toDTO(user));
+
+    return {
+      users,
+      pagination: {
+        total: result.total,
+        page: result.page,
+        limit: result.limit,
+        totalPages: result.totalPages,
+      },
+-   };
++   } as GetUsersResponse | GetAuthenticatedUsersResponse;
+  }
+```
+
+</TerminalWindow>
+
+<!--
+続いてUseCaseの方もこんな感じで修正してくれます。  
+認証あり版と認証なし版でDTO変換の処理を分岐させていますね。  
+認証あり版では`toAuthenticatedDTO`という関数を使って`isOwnProfile`フラグを設定しています。  
+-->
+
+---
+
+# 💻 コーディングでの利用 6/10
 
 <div class="text-2xl mt-8">
 
-## 「〇〇さんが困ってそうだから、<br>ちょっとしたツールが欲しいんだよな」
+## 👨‍💻「〇〇さんが困ってそうだから、<br>ちょっとしたツールが欲しいんだよな」
 
 <v-clicks>
 
@@ -304,23 +481,149 @@ export class UserController {
 
 </div>
 
-<div class="mt-8 text-lg">
-
-**JIRAチケット起票フォーム**を作成してもらった例
-
-- 必須項目・任意項目の設定
-- 日本語UI
-- カレンダー機能
-- **エラーハンドリングも実装済み** 🎉
-
-</div>
-
 </v-clicks>
 
 </div>
 
 <!--
-カンペ：
+〇〇さんがやってる困ってるあの作業、ちょっとしたツールがあれば楽になるんだけどな〜って思うことないですか？  
+ただ、そんな時間無いよな〜ってなることも多いと思います。  
+そんな時もAIに任せましょう。
+-->
+
+---
+
+# 💻 コーディングでの利用 7/10
+
+## 📝 JIRAチケット起票フォーム - プロンプト
+
+<TerminalWindow title="Claude Code" class="w-full">
+
+以下の要件に沿ったペライチのページを作成してください。
+
+```markdown
+# 要件
+* JIRAのチケット入力フォーム
+  * JIRAの`Create Issue Link`機能を使って作成したフォームのボタンをクリックすることで別タブでチケットフォームが開く仕様
+* 以下の値は固定で入る様にして下さい(ユーザの入力を受け付けずに直接リクエスト時に設定して下さい)
+  * pid
+* 以下の値は必須項目としてください
+  * issuetype: 課題タイプ
+  * summary: 概要
+  * priority: 優先度
+  * reporter: 報告書
+  * description: 説明
+* 以下の値は任意項目として下さい
+  * duedate: 期限
+  * assignee: 担当者
+* 入力フォームの表示は日本語にして下さい
+* 日付はカレンダーから選べる様にして下さい
+```
+
+</TerminalWindow>
+
+<!--
+今回は簡単なツールを作ってもらう例を紹介します。  
+内容としてはJIRAのチケット起票フォームを作って欲しいというものです。  
+要件としては以下の通りです。  
+* 作成したフォームからJIRAのCreate Issue Link機能を使ってチケットフォームが開く仕様にして下さい
+* JIRAのpidは固定値で入る様にして下さい
+* issuetype, summary, priority, reporter, descriptionは必須項目にして下さい
+* duedate, assigneeは任意項目にして下さい
+* 入力フォームの表示は日本語にして下さい
+* 日付はカレンダーから選べる様にして下さい
+-->
+
+---
+
+# 💻 コーディングでの利用 8/10
+
+## ✨ AIが作成したフォーム（完成形）
+
+<div class="mt-4 text-center text-lg">
+
+カレンダー機能 + バリデーション完備 🎉
+
+</div>
+
+<div class="flex justify-center items-center h-90">
+  <img src="./assets/jira_result2.png" alt="JIRAフォームの完成画面" class="max-h-full max-w-full object-contain rounded-lg shadow-lg" />
+</div>
+
+<!--
+これでお願いした結果がこちらになります。   
+期限はカレンダーから選べる様になっていそうなのとバリデーションも実装されています。  
+これ、自分は全く手を加えていないです。AIが全部作ってくれました。  
+背景もこういう画像にしてるんじゃなくて、全部AIが自動でやってくれています。  
+センスがない自分がデザインするより綺麗で正直びっくりしました。  
+何でも良いけど良い感じにならもう人間の出る幕無いなと思いましたね。  
+-->
+
+---
+
+# 💻 コーディングでの利用 9/10
+
+## ✨ AIが作成したフォーム（バリデーション）
+
+<div class="mt-4 text-center text-lg">
+
+必須項目の選択を促すエラーハンドリングも実装済み ✅
+
+</div>
+
+<div class="flex justify-center items-center h-90">
+  <img src="./assets/jira_result.png" alt="JIRAフォームのバリデーション画面" class="max-h-full max-w-full object-contain rounded-lg shadow-lg" />
+</div>
+
+<!--
+こちらはちゃんとバリデーションが反応する例です。  
+実態はブラウザの機能ですが、ちゃんと実装してくれているよという話です。  
+-->
+
+---
+
+# 💻 コーディングでの利用 10/10
+
+## 🎯 AIが実装してくれた内容
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+
+<div>
+
+### ✅ 実装された機能
+
+- 必須/任意項目の適切な設定
+- HTML5 date inputによるカレンダー
+- ドロップダウンの選択肢設定
+
+</div>
+
+<div>
+
+### 🚀 追加でやったこと
+
+**なし！**
+
+<div class="mt-8 text-xl text-green-400">
+
+実装時間: 約5分 ⚡
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+まとめるとこんな感じです。  
+
+- 必須/任意項目の適切な設定してくれました
+- HTML5 date inputによるカレンダーも実装してくれました
+- ドロップダウンの選択肢設定もしてくれています
+
+しかもありがたいことに私がやったことは何もないです。  
+実装時間もAIが動いている時間ですが約5分とかかかって数分という感じです。  
+これだけで感謝されれば最高ですよね。  
 -->
 
 ---
@@ -331,7 +634,7 @@ class: text-center
 # 🔍 コードレビューでの利用
 
 <!--
-カンペ：
+続いてはレビューでの利用例を紹介いたします。
 -->
 
 ---
@@ -340,19 +643,17 @@ class: text-center
 
 <div class="text-2xl mt-8">
 
-## 数百行に及ぶ変更...<br>file changesは数十にも...
+こんなPRないですか？
+
+* 数百行に及ぶ変更……
+* file changesは数十にも……
+* 見るだけで疲れる……😵‍💫
 
 <v-clicks>
 
 <div class="mt-12 text-center">
 
-### 👉 AIに任せましょう 🤖
-
-</div>
-
-<div class="mt-8 text-lg text-gray-400">
-
-Reactのselectorでパフォーマンス問題を見つけた例
+### 👉 AIに任せm(ry 🤖
 
 </div>
 
@@ -361,14 +662,16 @@ Reactのselectorでパフォーマンス問題を見つけた例
 </div>
 
 <!--
-カンペ：
+例えばこんなPRないですか？  
+数百行に及ぶ変更、file changesは数十あり、見るだけで疲れる……みたいなやつです。  
+そんな時もAIに任せましょう。  
 -->
 
 ---
 
 # 🔍 コードレビューでの利用 2/3
 
-## 🎯 デモ用コード
+## 🎯 AIが問題を発見したコード
 
 <TerminalWindow title="BadExample.tsx" class="w-full">
 
@@ -390,22 +693,37 @@ export function BadExample() {
 
 </TerminalWindow>
 
-<div class="mt-4">
+<!--
+実際にAIが問題を発見したコード例です。  
+例えばこんなコードがあったとします。
+実例がReactのコードで恐縮ですがこんな感じのコードがあると思って下さい。  
+今回見ていただきたいところは `useAppsSelector`となっている箇所です。  
+詳しい処理は一旦おいておいて、この関数は戻り値が同じであればキャッシュが効くということと、関数がオブジェクトを返していることに注目して下さい。  
 
-## プロンプト
+私は流し見でふむふむ特におかしいとこないかなと思いつつ一応AIにレビューを投げました。    
+-->
+
+---
+
+## 📝 プロンプト
 
 <TerminalWindow title="Claude Code" class="w-full">
 
-BadExampleについて以下の観点に沿ってレビューしてください。
+BadExampleについて以下の観点に沿ってレビューしてください。  
+
+```markdown
 * パフォーマンス上ネックになるポイントがあれば改善案を提示して下さい
-* デファクトスタンダードにのっとった実装になっているか確認して下さい
+* デファクトスタンダードにのっとった実装になっているか確認して下さい  
+```
 
 </TerminalWindow>
 
-</div>
-
 <!--
-カンペ：
+レビュー用のpromptはこんな感じです。  
+* パフォーマンス上ネックになるポイントがあれば改善案を提示して下さいというのと
+* デファクトスタンダードにのっとった実装になっているか確認して下さいという観点でレビューをお願いしています。
+
+実際に自分が使っているpromptもこんな感じでやってます。  
 -->
 
 ---
@@ -440,18 +758,23 @@ const { name } = useAppSelector(
 
 </TerminalWindow>
 
-<v-click>
-
 <div class="mt-4 text-xl text-green-400">
 
 ✨ パッと見で見落としていた問題を発見！
 
 </div>
 
-</v-click>
-
 <!--
-カンペ：
+結果はこんな感じで、めっちゃ怒られます。    
+理由としては記載の通りです。  
+JavaScriptのオブジェクト同士の比較はhogeというobjectを作って、huga=hogeくらいのことをしない限り、常にfalseになるので、この実装では毎回新しいオブジェクトを返している状態になっています。  
+じゃあこれで何が困るのかっていうのも記載の通りで、Reactは基本的に値が変わったら再レンダリングされるので、レンダリングコストが毎回かかっちゃいますよという話です。  
+対策も簡単で、nameしか使わないなら直接name返せよって話です。  
+一応二つ目みたいな対策もありますが推奨されている方が良いかなと思います。  
+
+これ何が嬉しかったかというと、もちろん知識としてこのことが起こるのは知ってたし自分でやるならこうは書かないです。  
+が、流し見で見落としていたポイントをAIが指摘してくれたことが非常にありがたかったです。  
+こういう細かいところを見落としがちがなのでしっかり指摘してくれるのは非常に助かりました。  
 -->
 
 ---
@@ -459,31 +782,27 @@ layout: center
 class: text-center
 ---
 
-# 🔎 実装調査での利用
+# 🔎 調査タスクでの利用
 
 <!--
-カンペ：
+続いては調査タスクでの話です。
 -->
 
 ---
 
-# 🔎 実装調査での利用 1/3
+# 🔎 調査タスクでの利用 1/3
 
 <div class="text-2xl mt-8">
 
-## 「〇〇って処理どうなってますか？」<br>って聞かれますよね？
+## 👨‍🏫「〇〇って処理どうなってますか？」
 
 <v-clicks>
 
-<div class="mt-8">
-
-自分で調べればわかるけど<br>探すの面倒だな... 😮‍💨
-
-</div>
+自分で調べればわかるけど、探す時間ないな……
 
 <div class="mt-12 text-center">
 
-### 👉 AIに任せましょう 🤖
+### 👉 AIに任せm(ry 🤖
 
 </div>
 
@@ -492,80 +811,125 @@ class: text-center
 </div>
 
 <!--
-カンペ：
+偉い人に〇〇って処理どうなってますか？って聞かれたことないですか？  
+もちろん調べればわかりますが、今言うか？みたいな気持ちの時あると思います。  
+そんな時もAIに任せましょう。
 -->
 
 ---
 
-# 🔎 実装調査での利用 2/3
+# 🔎 調査タスクでの利用 2/3
 
 ## 📝 プロンプト例
 
 <TerminalWindow title="Claude Code" class="w-full">
 
-こちらのrepositoryにおいて、`src/libraries`配下のscriptに
-おいてどの様な処理をする何のためのファイルなのか
-ファイル単位で説明して下さい。
+こちらのrepositoryにおいて`src/libraries`配下のscriptは<br />どの様な処理をする何のためのファイルなのかファイル単位で説明して下さい。
 
+```
+.
+├── src
+│   ├── libraries
+│   │   ├── articles.ts
+│   │   ├── date.ts
+│   │   ├── image.ts
+│   │   └── markdown.ts
+│
+├── ..... 
+```
 </TerminalWindow>
-
-<v-click>
-
-<div class="mt-8">
-
-## 🎯 AIの回答（抜粋）
-
-<TerminalWindow title="Claude Code - 調査結果" class="w-full text-sm">
-
-1. date.ts - 日付文字列の解析と変換を行うユーティリティ
-   - parseStringDate(): 文字列の日付をタイムスタンプに変換
-   - dateFromDateString(): YYYY/MM/DD形式からDateオブジェクト生成
-
-2. image.ts - 画像のレスポンシブ対応サイズ計算
-   - getImageSize(): 用途に応じてPC・SP用のサイズを計算
-
-3. articles.ts - ブログ記事のメタデータ管理とタグ処理
-   - getArticleMetaData(): 全記事を読み込み、メタデータを抽出
-   - getTagCount(): タグごとの件数を集計
-
-</TerminalWindow>
-
-</div>
-
-</v-click>
 
 <!--
-カンペ：
+こちら実際の私のブログの構成の一部になります。
+今回実際の業務コード伝えるわけにはいかないので、自作のブログを例にしています。  
+このブログ仕組みを作ったのが古すぎて、この辺のファイル内容が思い出せないな〜って時がありました。  
+そこでAIに調査をお願いした例です。  
 -->
 
 ---
 
-# 🔎 実装調査での利用 3/3
+# 🔎 調査タスクでの利用 3/3
+## 🎯 AIの回答
+
+<TerminalWindow title="Claude Code - 調査結果" class="w-full text-xs" font-size="8px">
+
+```markdown
+⏺ src/libraries 配下の各ファイルについて説明します。  
+**1. date.ts (src/libraries/date.ts)**: 日付文字列の解析と変換を行うユーティリティ  
+主な処理:
+- parseStringDate() (5-11行目): 文字列の日付をタイムスタンプ(number)に変換
+- dateFromDateString() (17-35行目): YYYY/MM/DD形式の文字列からDateオブジェクトを生成
+  - GMT対応のため9時に設定
+  - バリデーション機能付き
+- convertToDecimal() (37-43行目): 文字列を10進数に変換する内部関数
+**2. image.ts (src/libraries/image.ts)**: 画像のレスポンシブ対応サイズ計算  
+主な処理:
+- getImageSize() (19-60行目): 画像のパスと用途(サムネイル/記事)に応じて、PC・SP用のサイズを計算
+  - サムネイル用: 336px × 189px (デフォルト)
+  - 記事用: PC 800px × 450px / SP 320px × 180px
+  - アスペクト比を維持して自動計算
+**3. articles.ts (src/libraries/articles.ts)**: ブログ記事のメタデータ管理とタグ処理の中核ライブラリ  
+主な処理:
+- getArticleMetaData() (18-45行目): content/md-pages 配下の全記事を読み込み、メタデータを抽出
+  - マークダウンのfront-matterを解析
+  - 更新日降順でソート
+- getTagCount() (51-61行目): 記事のタグごとの件数を集計
+- convertTagList() (72-82行目): タグ情報を表示用データに整形(タグ名、記事数、URL)
+- convertArticleMetaData() (84-105行目): マークダウンをHTMLに変換し、記事の説明文(130文字)を生成
+**4. markdown.ts (src/libraries/markdown.ts)**: マークダウンのHTML変換とカスタマイズ処理  
+```
+
+</TerminalWindow>
+
+<!--
+結果としてはこんな感じです。  
+各ファイルについて処理内容をしっかりと回答してくれています。  
+ちなみにmarkdown.tsについても回答してくれていますが、長くなりすぎたので省略しています。  
+これだとあまり凄さがわからないかもですが、それこそ最初に話した通りこの処理どうなってんだっけ？とかはAIに調べさせて回答したりしています。
+-->
+
+---
+
+# 🔎 調査タスクでの利用 3/4
 
 ## 🔧 追加質問もスムーズに
 
 <TerminalWindow title="Claude Code" class="w-full">
 
-追加で教えて下さい。
-こちらのprojectではprismjsを利用していると思います。
-テキストのインラインコードのコントラスト比が低いため
-改善したいです。どこを修正すれば良いでしょうか？
+追加で教えて下さい。 <br />
+こちらのprojectではprismjsを利用していると思います。 <br />
+テキストのインラインコードのコントラスト比が低いため改善したいです。どこを修正すれば良いでしょうか？
 
 </TerminalWindow>
 
-<v-click>
+<div class="mt-4 text-center text-lg">
 
-<div class="mt-4">
+実際のコントラスト比が低い例 👇
+
+<div class="flex justify-center items-center mt-1">
+  <img src="./assets/contrast.png" alt="コントラスト比が低いインラインコードの例" class="max-h-full max-w-full object-contain rounded-lg shadow-lg" />
+</div>
+
+</div>
+
+<!--
+ちなみに、追加質問もスムーズにできます。  
+例えばこのブログではprismjsを使ってコードハイライトを実装しています。  
+が、気づいたらこんな感じで視力検査か？みたいな色味になってました。  
+ライブラリの設定が悪いのかなと思って、AIに「インラインコードのコントラスト比が低いため改善したいのですが、どこを修正すれば良いでしょうか？」と聞いてみました。
+-->
+
+---
+
+# 🔎 調査タスクでの利用 4/4
 
 ## ✨ AIの回答
 
 <TerminalWindow title="Claude Code - 調査結果" class="w-full text-sm">
-<div>
-⏺ 見つかりました！インラインコードのコントラスト比が低い原因は
-src/styles/templates/mdTemplate.css:120 にあります。
 
-問題の箇所: 120行目の opacity: 20%; が原因！
-
+⏺ 見つかりました！インラインコードのコントラスト比が低い原因は  
+src/styles/templates/mdTemplate.css:120 にあります。  
+問題の箇所: 120行目の opacity: 20%; が原因！  
 修正方法:
 
 ```css
@@ -577,68 +941,19 @@ src/styles/templates/mdTemplate.css:120 にあります。
     border-radius: 0.25rem;
 }
 ```
-</div>
+
 </TerminalWindow>
 
-</div>
 
-</v-click>
-
-<!--
-カンペ：
--->
-
----
-layout: center
-class: text-center
----
-
-# 📝 資料整理での利用
-
-<!--
-カンペ：
--->
-
----
-
-# 📝 資料整理での利用
-
-<div class="text-2xl mt-8">
-
-## 「急遽プレゼン資料作らなきゃ...」<br>話すことは決まってるんだけどな...
-
-<v-clicks>
-
-<div class="mt-12 text-center">
-
-### 👉 AIに任せましょう 🤖
-
-</div>
-
-<div class="mt-8 text-xl">
-
-**NotebookLM** を使ってみた
-
-<div class="text-lg text-gray-400 mt-4">
-
-資料をアップロードするだけで<br>構成やスクリプトを自動生成
-
-</div>
-
-<div class="mt-8 text-green-400">
-
-✨ 最近notebooklmで感動した！
-
-</div>
-
-</div>
-
-</v-clicks>
-
+<div class="flex justify-center items-center mt-1">
+  <img src="./assets/contrast_result.png" alt="コントラスト比が低いインラインコード修正結果" class="max-h-full max-w-full object-contain rounded-lg shadow-lg" />
 </div>
 
 <!--
-カンペ：
+結果はこちらの通りです。
+ライブラリ濡れ衣で、完全に自分が書いたコードです。  
+指摘通り透過しているため色が薄くなっているので、該当コードを消したらちゃんと見やすくなりました。  
+直したいけど探すのも面倒だったので、これは非常に助かりましたね。  
 -->
 
 ---
@@ -649,52 +964,57 @@ class: text-center
 # 🤔 仕事で使えるの？
 
 <!--
-カンペ：
+ここまで色々な利用例を紹介してきましたが、実際の仕事で使えるのか？という話をしていこうと思います。
 -->
 
 ---
 
 # 🤔 仕事で使えるの？ 1/2
 
-<v-clicks>
-
 <div class="text-2xl mt-8">
 
-## 使えるっちゃ使えるが<br>使えないっちゃ使えない 🤷
+## 使えるっちゃ使えるが、使えないっちゃ使えない 🤷
 
 </div>
+
+<v-clicks>
 
 <div class="mt-8 text-xl">
 
 ### 今までの仕事が半分の時間で出来た！
 
-<div class="text-red-400 font-bold mt-4">
-
-❌ は無い
-
 </div>
 
-<div class="text-gray-400 mt-2">
+<div class="text-red-400 font-bold mt-4 text-xl">
 
-（自分の生産性がAIで爆上がりした！は無い）
-
-</div>
-
+❌ は無い。  
+自分の生産性がAIで爆上がりした！は無いです。
 </div>
 
 <div class="mt-12 text-2xl text-green-400">
 
 ## 何が変わった？
 
-自分の**手足として働くパートナー**が増えた<br>
-自分が**150%働ける**様になった感覚
+* 自分の**手足として働くパートナー**が増えた
+* 自分が**150%働ける**様になった感覚
+* AIをうまく使える人と使えない人では差が出る
 
 </div>
 
 </v-clicks>
 
 <!--
-カンペ：
+早速結論ですが、使えるっちゃ使えるが使えないっちゃ使えないという感じです。  
+どっちだよって感じなんですが、例えば「今までの仕事が半分の時間で出来た！AIすごい！」みたいなことは無いです。  
+自分の生産性が2倍になったとかないです。  
+
+じゃあ何が変わったのかというと自分の手足として働くパートナーが増えた感じです。  
+何でもやってくれる後輩とか、自分用の業務委託メンバーがいる感じですね。  
+自分がmtg中など動けない時も働いてくれるので、150%働ける様になった感覚が個人的には近いです。  
+
+AIをうまく使えるかどうかでというところについては、AIは結局パートナーに近いというところです。  
+要は指示の出し方が上手い人と下手な人で差が出るという感じです。  
+AIは万能ではなくパートナーなのでやって欲しいこととして欲しくないことをしっかり伝えられればとても強力なツールとして動くと思います。
 -->
 
 ---
@@ -709,13 +1029,21 @@ class: text-center
 
 <v-clicks>
 
+<div class="mt-2">
+
 ### 単純作業系
 - 一定やり方を教えれば勝手にできる様な内容
 - 人間がやらなくて良いと思えるレベル
 
+</div>
+
+<div class="mt-2">
+
 ### 資料整理系
 - 最近notebooklmで感動
 - 人間がやらなくて良いと思えるレベル
+
+</div>
 
 </v-clicks>
 
@@ -727,16 +1055,20 @@ class: text-center
 
 <v-clicks>
 
+<div class="mt-2">
+
 ### 人間が見た方が早いこと
 - 数年前のコードもあれば数日前のコードもある様なプロダクト
 - AIは確実に実装がブレる
 
-### 複雑なこと
-- 人間がシンプルにして上げた方が精度が高い
+</div>
+<div class="mt-2">
 
-### 人間が対応しきれない
+### 人間が必要なところ
 - AIがやったからOKという世界はまだ来てない
 - 最後のボトルネックは人間
+
+</div>
 
 </v-clicks>
 
@@ -745,7 +1077,21 @@ class: text-center
 </div>
 
 <!--
-カンペ：
+仕事で使えるポイントと使えないポイントについてまとめるとこんな感じです。  
+使えるポイントとしては、単純作業系です。  
+一定やり方を教えれば勝手にできる様な内容についてはもう人間がやらなくて良いと思えるレベルでAIくんは賢いです。AIに任せましょう。  
+あとは資料整理系です。  
+今日お話ししてない内容で恐縮ですが、最近notebooklmを使い始めたのですが、これが非常にすごいです。
+必要なドキュメントを放り込んでおけば要約も資料作成もお手軽かつ高精度でやってくれます。  
+使ってるよって方いますかね？  
+個人的は情報突っ込んでスライド作成とかしたら最高でした。わかりやすいしイラストはいるしで完璧でした。  
+
+逆に使えないポイントとしては、人間が見た方が早いことです。  
+数年前のコードもあれば数日前のコードもある様なプロダクトで、AIに実装をお願いした場合確実に実装がブレます。    
+人間だったら察して古すぎるコード見ないとかすると思いますが、AIはそういうのができないので、結局人間が見た方が早いということがあります。  
+あとは人間が必要なところです。  
+残念ながらAIがやったからOKという世界はまだ来ていないです。  
+なのでAIのやったことにOKを出すのは人間が出してあげる必要があるため、最後のボトルネックは人間になります。
 -->
 
 ---
@@ -762,7 +1108,7 @@ class: text-center
 </div>
 
 <!--
-カンペ：
+まとめになりますが、AI使って人間は楽していきましょうという話でした。  
 -->
 
 ---
@@ -783,19 +1129,19 @@ class: text-center
 
 <div class="text-3xl text-orange-400 font-bold mb-12">
 
-このスライド自体も<br>AIに作ってもらいました 🤖✨
+このスライド自体もAIに作ってもらいました 🤖✨
+
+<div class="text-lg text-gray-500 font-normal">
+
+（原稿は人間が書きましたが、スライド化は全部AIにお任せ）
 
 </div>
 
-<div class="text-lg text-gray-500">
-
-（原稿は人間が書きましたが、<br>スライド化は全部AIにお任せ）
-
-</div>
-
-<div class="mt-16 text-2xl text-gray-500">
+<div class="mt-16 text-2xl text-gray-500 font-normal">
 
 Thank you for listening! 🎉
+
+</div>
 
 </div>
 
@@ -804,15 +1150,26 @@ Thank you for listening! 🎉
 </div>
 
 <!--
-カンペ：
+ちなみに、最後に余談になるのですが、このスライド自体もAIに作ってもらいました。
+原案、原稿は私が書きましたがスライド化とかデザインとかやたら絵文字使ってくる表現とかは全部AIにお任せした結果になります。  
+ではご静聴いただきありがとうございました。
 -->
 
 <style>
+/* ベースフォントサイズの調整 */
+.slidev-layout {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 2rem 3rem;
+}
+
 /* 通常スライドのタイトルを左上に固定 */
 .slidev-layout:not(.slidev-layout-center) h1 {
   text-align: left;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 /* セクション区切りスライド以外のタイトルを左詰め */
@@ -820,8 +1177,49 @@ Thank you for listening! 🎉
   text-align: left;
 }
 
-/* コンテンツエリアの調整 */
-.slidev-layout {
-  padding-top: 2rem;
+/* h2のサイズ調整 */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* h3のサイズ調整 */
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* リストのスタイル改善 */
+ul, ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* コードブロックのフォントサイズ */
+pre, code {
+  font-size: 0.9rem;
+}
+
+/* ページ番号のスタイル改善 */
+.slidev-page-number {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  padding: 0.5rem 1rem;
+}
+
+/* センターレイアウトの調整 */
+.slidev-layout-center {
+  padding: 3rem;
+}
+
+/* TerminalWindowのコンテンツサイズ調整 */
+.terminal-display {
+  font-size: 0.85rem !important;
 }
 </style>
