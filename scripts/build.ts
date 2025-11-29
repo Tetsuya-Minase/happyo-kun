@@ -28,7 +28,7 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
           const targetPath = path.join(distDir, subDir);
           await fs.copy(subDirPath, targetPath, {
             overwrite: true,
-            filter: (src) => !src.endsWith('_redirects')
+            filter: (src) => !src.endsWith('_redirects') // 個別の_redirectsは除外し、後で統合版を作成
           });
           console.log(`📋 Copied ${subDir}/ files to ${subDir}/`);
         }
@@ -38,6 +38,51 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
     console.log('📋 All Slidev files copied successfully.');
   } catch (error) {
     console.error('❌ Error copying slide files:', error);
+  }
+}
+
+async function createRedirectsFile(distDir: string, slideDirs: string[]): Promise<void> {
+  try {
+    console.log('📄 Creating _redirects file for Cloudflare Pages...');
+
+    // 全スライドディレクトリのリストを取得
+    const allSlideNames: string[] = [];
+    for (const slideDir of slideDirs) {
+      const slideDistPath = path.join(appsDir, slideDir, 'dist');
+      if (!(await fs.pathExists(slideDistPath))) {
+        continue;
+      }
+      const subDirs = await fs.readdir(slideDistPath);
+      for (const subDir of subDirs) {
+        const subDirPath = path.join(slideDistPath, subDir);
+        const stat = await fs.stat(subDirPath);
+        if (stat.isDirectory()) {
+          allSlideNames.push(subDir);
+        }
+      }
+    }
+
+    // _redirects ファイルの内容を生成
+    let redirectsContent = '# Cloudflare Pages redirects for Slidev presentations\n';
+    redirectsContent += '# This enables SPA routing for all slide presentations\n\n';
+
+    // 各スライドのルートをそれぞれのindex.htmlにリダイレクト
+    for (const slideName of allSlideNames) {
+      redirectsContent += `/${slideName}/*  /${slideName}/index.html  200\n`;
+    }
+
+    // ランディングページのフォールバック（最後に配置）
+    redirectsContent += '\n# Fallback for landing page\n';
+    redirectsContent += '/*  /index.html  200\n';
+
+    // _redirects ファイルを書き込み
+    const redirectsPath = path.join(distDir, '_redirects');
+    await fs.writeFile(redirectsPath, redirectsContent);
+    console.log(`📄 Created _redirects file with ${allSlideNames.length} slide routes`);
+    console.log(`   Routes: ${allSlideNames.join(', ')}`);
+
+  } catch (error) {
+    console.error('❌ Error creating _redirects file:', error);
   }
 }
 
@@ -93,9 +138,8 @@ async function main(): Promise<void> {
     // 5. Copy slide dist files to integrated build
     await copySlideDistToBuild(startDistDir, slideDirs);
 
-    // Note: _redirects file is not needed for Cloudflare Pages
-    // Cloudflare Pages automatically handles SPA routing without _redirects
-    console.log('📄 Skipping _redirects file creation (not needed for Cloudflare Pages).');
+    // 6. Create _redirects file for Cloudflare Pages SPA routing
+    await createRedirectsFile(startDistDir, slideDirs);
 
     console.log('\n✅ Integrated build completed successfully!');
     console.log(`📂 Output directory: ${startDistDir}`);
