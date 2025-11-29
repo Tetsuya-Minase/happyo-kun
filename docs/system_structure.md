@@ -1,0 +1,19 @@
+# システム構成図
+```mermaid
+flowchart 
+    subgraph 全体構成
+        direction LR
+        %% 全体構成
+        WEB_BROWSER[browser] --> CLOUD_FLARE[cloudflare] --> HAPPYO_KUN[happyokun.dev]
+    end
+    subgraph ページ遷移
+        direction LR
+        %% ページ遷移。各スライドページに遷移が可能でリロードも可能
+        HAPPYO_KUN_TOP["/"] --> PAGE1["/page1/1"] --> PAGE1["/page1/1"]
+        HAPPYO_KUN_TOP["/"] --> PAGE1_PRESENTER["/page1/presenter/1"] --> PAGE1_PRESENTER["/page1/presenter/1"]
+        HAPPYO_KUN_TOP["/"] --> PAGE2["/page2/1"] --> PAGE2["/page2/1"]
+        HAPPYO_KUN_TOP["/"] --> PAGE2_PRESENTER["/page2/presenter/1"] --> PAGE2_PRESENTER["/page2/presenter/1"]
+        HAPPYO_KUN_TOP["/"] --> PAGE3["/page3/1"] --> PAGE3["/page3/1"]
+        HAPPYO_KUN_TOP["/"] --> PAGE3_PRESENTER["/page3/presenter/1"] --> PAGE3_PRESENTER["/page3/presenter/1"]
+    end 
+```
