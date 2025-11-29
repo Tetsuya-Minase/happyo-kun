@@ -65,17 +65,18 @@ async function createRedirectsFile(distDir: string, slideDirs: string[]): Promis
     // _redirects ファイルの内容を生成
     let redirectsContent = '# Cloudflare Pages redirects for Slidev presentations\n';
     redirectsContent += '# This enables SPA routing for all slide presentations\n';
-    redirectsContent += '# Status code 404 ensures only non-existent files are rewritten,\n';
-    redirectsContent += '# preventing infinite loops for static assets (JS, CSS, images)\n\n';
+    redirectsContent += '# Status code 200 = proxying (internal rewrite)\n';
+    redirectsContent += '# Existing files (JS, CSS, images) are always served first,\n';
+    redirectsContent += '# only non-existent paths are rewritten to index.html\n\n';
 
     // 各スライドのルートをそれぞれのindex.htmlにリダイレクト
     for (const slideName of allSlideNames) {
-      redirectsContent += `/${slideName}/*  /${slideName}/index.html  404\n`;
+      redirectsContent += `/${slideName}/*  /${slideName}/index.html  200\n`;
     }
 
     // ランディングページのフォールバック（最後に配置）
     redirectsContent += '\n# Fallback for landing page\n';
-    redirectsContent += '/*  /index.html  404\n';
+    redirectsContent += '/*  /index.html  200\n';
 
     // _redirects ファイルを書き込み
     const redirectsPath = path.join(distDir, '_redirects');
