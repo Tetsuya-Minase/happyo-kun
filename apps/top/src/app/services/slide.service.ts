@@ -11,7 +11,7 @@ export class SlideService {
   private readonly slides: WritableSignal<SlideMetadata[]>;
 
   constructor() {
-    if (!this.#validateSlideData(slideData)) {
+    if (!this.#isValidSlideDataStructure(slideData)) {
       throw new Error(`slide data is invalid format.(${JSON.stringify(slideData)})`);
     }
     this.slides = signal<SlideMetadata[]>(slideData.slides)
@@ -21,7 +21,7 @@ export class SlideService {
     return this.slides.asReadonly();
   }
 
-  #validateSlideData(data: any): data is { slides: SlideMetadata[] } {
+  #isValidSlideDataStructure(data: any): data is { slides: SlideMetadata[] } {
     if (data == null || typeof data !== 'object' || !('slides' in data) || !Array.isArray(data.slides)) {
       return false;
     }
@@ -29,7 +29,7 @@ export class SlideService {
       if (s == null || typeof s !== 'object' || !('title' in s) || !('description' in s) || !('dirName' in s)) {
         return false;
       }
-      return typeof s.title === 'string' || typeof s.description === 'string' || typeof s.dirName === 'string';
+      return typeof s.title === 'string' && typeof s.description === 'string' && typeof s.dirName === 'string';
     });
   }
 }
