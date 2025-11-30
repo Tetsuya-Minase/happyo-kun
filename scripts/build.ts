@@ -38,6 +38,42 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
   }
 }
 
+async function createUnifiedRedirectsFile(distDir: string): Promise<void> {
+  try {
+    console.log('📋 Creating unified _redirects file...');
+
+    const redirectRules: string[] = [];
+    const entries = await fs.readdir(distDir);
+
+    // 各サブディレクトリの _redirects ファイルを読み込む
+    for (const entry of entries) {
+      const entryPath = path.join(distDir, entry);
+      const stat = await fs.stat(entryPath);
+
+      if (stat.isDirectory()) {
+        const redirectsFile = path.join(entryPath, '_redirects');
+        if (await fs.pathExists(redirectsFile)) {
+          const content = await fs.readFile(redirectsFile, 'utf-8');
+          const lines = content.trim().split('\n').filter(line => line.trim());
+          redirectRules.push(...lines);
+          console.log(`📋 Found _redirects in ${entry}/`);
+        }
+      }
+    }
+
+    // ルートの _redirects ファイルに統合して書き込む
+    if (redirectRules.length > 0) {
+      const rootRedirectsFile = path.join(distDir, '_redirects');
+      await fs.writeFile(rootRedirectsFile, redirectRules.join('\n') + '\n', 'utf-8');
+      console.log(`📋 Created unified _redirects with ${redirectRules.length} rules`);
+    } else {
+      console.log('⚠️  No redirect rules found');
+    }
+  } catch (error) {
+    console.error('❌ Error creating unified _redirects file:', error);
+  }
+}
+
 
 async function main(): Promise<void> {
   try {
@@ -90,6 +126,9 @@ async function main(): Promise<void> {
 
     // 5. Copy slide dist files (including 404.html for SPA routing) to integrated build
     await copySlideDistToBuild(startDistDir, slideDirs);
+
+    // 6. Create unified _redirects file in the root of start/dist
+    await createUnifiedRedirectsFile(startDistDir);
 
     console.log('\n✅ Integrated build completed successfully!');
     console.log(`📂 Output directory: ${startDistDir}`);
