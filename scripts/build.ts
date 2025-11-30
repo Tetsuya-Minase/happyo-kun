@@ -5,7 +5,7 @@ $.verbose = true;
 
 const rootDir: string = process.cwd();
 const appsDir: string = path.join(rootDir, 'apps');
-const topDistDir: string = path.join(appsDir, 'top', 'dist');
+const distDir: string = path.join(rootDir, 'dist', 'browser');
 
 async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promise<void> {
   try {
@@ -155,12 +155,16 @@ async function main(): Promise<void> {
     console.log('\n📋 Generating slide configuration...');
     await generateSlideConfig();
 
-    // 4. Copy slide functions to start's dist for API functionality
+    // 4. Build top app
+    console.log('\n📦 Building top application...');
+    await $`pnpm --filter top build`;
+
+    // 5. Copy slide functions to start's dist for API functionality
     for (const slideDir of slideDirs) {
       const slideFunctionsPath = path.join(appsDir, slideDir, 'functions');
 
       if (await fs.pathExists(slideFunctionsPath)) {
-        const targetFunctionsPath = path.join(topDistDir, 'functions');
+        const targetFunctionsPath = path.join(distDir, 'functions');
         console.log(`📋 Copying ${slideDir} functions to integrated build...`);
         await fs.copy(slideFunctionsPath, targetFunctionsPath, { overwrite: true });
       } else {
@@ -168,14 +172,14 @@ async function main(): Promise<void> {
       }
     }
 
-    // 5. Copy slide dist files (including 404.html for SPA routing) to integrated build
-    await copySlideDistToBuild(topDistDir, slideDirs);
+    // 6. Copy slide dist files (including 404.html for SPA routing) to integrated build
+    await copySlideDistToBuild(distDir, slideDirs);
 
-    // 6. Create unified _redirects file in the root of start/dist
-    await createUnifiedRedirectsFile(topDistDir);
+    // 7. Create unified _redirects file in the root of start/dist
+    await createUnifiedRedirectsFile(distDir);
 
     console.log('\n✅ Integrated build completed successfully!');
-    console.log(`📂 Output directory: ${topDistDir}`);
+    console.log(`📂 Output directory: ${distDir}`);
 
   } catch (error) {
     console.error('\n❌ Build failed:', error);
