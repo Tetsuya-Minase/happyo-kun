@@ -1,0 +1,18 @@
+---
+title: システム全体構成
+---
+flowchart LR
+    Browser[ブラウザ] --> CloudFlare[Cloudflare]
+    CloudFlare --> App[happyokun.dev]
+    
+    subgraph App[happyokun.dev]
+        direction TB
+        Root["/ (Angular)"]
+        Slide1["/page1/* (Slidev)"]
+        Slide2["/page2/* (Slidev)"]
+        Slide3["/page3/* (Slidev)"]
+        
+        Root --> Slide1
+        Root --> Slide2
+        Root --> Slide3
+    end
