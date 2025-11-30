@@ -5,7 +5,7 @@ $.verbose = true;
 
 const rootDir: string = process.cwd();
 const appsDir: string = path.join(rootDir, 'apps');
-const startDistDir: string = path.join(appsDir, 'start', 'dist');
+const topDistDir: string = path.join(appsDir, 'top', 'dist');
 
 async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promise<void> {
   try {
@@ -18,7 +18,7 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
         continue;
       }
 
-      // slide/dist 内の各サブディレクトリ (intro, demo など) を start/dist にコピー
+      // slide/dist 内の各サブディレクトリ (intro, demo など) を top/dist にコピー
       const slideDirs = await fs.readdir(slideDistPath);
       for (const subDir of slideDirs) {
         const subDirPath = path.join(slideDistPath, subDir);
@@ -155,16 +155,12 @@ async function main(): Promise<void> {
     console.log('\n📋 Generating slide configuration...');
     await generateSlideConfig();
 
-    // 4. Build the start app
-    console.log('\n📦 Building start application...');
-    await $`pnpm --filter start build`;
-
-    // 5. Copy slide functions to start's dist for API functionality
+    // 4. Copy slide functions to start's dist for API functionality
     for (const slideDir of slideDirs) {
       const slideFunctionsPath = path.join(appsDir, slideDir, 'functions');
 
       if (await fs.pathExists(slideFunctionsPath)) {
-        const targetFunctionsPath = path.join(startDistDir, 'functions');
+        const targetFunctionsPath = path.join(topDistDir, 'functions');
         console.log(`📋 Copying ${slideDir} functions to integrated build...`);
         await fs.copy(slideFunctionsPath, targetFunctionsPath, { overwrite: true });
       } else {
@@ -172,14 +168,14 @@ async function main(): Promise<void> {
       }
     }
 
-    // 6. Copy slide dist files (including 404.html for SPA routing) to integrated build
-    await copySlideDistToBuild(startDistDir, slideDirs);
+    // 5. Copy slide dist files (including 404.html for SPA routing) to integrated build
+    await copySlideDistToBuild(topDistDir, slideDirs);
 
-    // 7. Create unified _redirects file in the root of start/dist
-    await createUnifiedRedirectsFile(startDistDir);
+    // 6. Create unified _redirects file in the root of start/dist
+    await createUnifiedRedirectsFile(topDistDir);
 
     console.log('\n✅ Integrated build completed successfully!');
-    console.log(`📂 Output directory: ${startDistDir}`);
+    console.log(`📂 Output directory: ${topDistDir}`);
 
   } catch (error) {
     console.error('\n❌ Build failed:', error);
