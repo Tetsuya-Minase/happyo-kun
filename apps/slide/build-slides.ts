@@ -82,13 +82,13 @@ export default config
           console.log(`   📁 assetsディレクトリをコピーしました`);
         }
 
-        // SPAルーティングのために404.htmlをindex.htmlのコピーとして作成
-        const indexPath = path.join(slideInfo.outputDir, 'index.html');
-        const notFoundPath = path.join(slideInfo.outputDir, '404.html');
-        if (await fs.pathExists(indexPath)) {
-          await fs.copy(indexPath, notFoundPath);
-          console.log(`   📄 404.htmlを作成しました (SPAルーティング用)`);
-        }
+        // 404.htmlは作成しない（ミドルウェアでSPAルーティングを処理）
+        // const indexPath = path.join(slideInfo.outputDir, 'index.html');
+        // const notFoundPath = path.join(slideInfo.outputDir, '404.html');
+        // if (await fs.pathExists(indexPath)) {
+        //   await fs.copy(indexPath, notFoundPath);
+        //   console.log(`   📄 404.htmlを作成しました (SPAルーティング用)`);
+        // }
       } finally {
         if (await fs.pathExists(tempConfigPath)) {
           await fs.remove(tempConfigPath);

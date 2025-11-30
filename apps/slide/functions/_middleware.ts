@@ -5,36 +5,33 @@ export async function onRequest(context: any) {
   const url = new URL(context.request.url);
   const pathname = url.pathname;
 
-  // Try to get the response from static assets or API endpoints
-  let response = await context.next();
-
-  // If 404 and not an API endpoint, check if it's a SPA route
-  if (response.status === 404 && !pathname.startsWith('/api/')) {
-    // Check which slide directory the path belongs to
-    for (const slideDir of SLIDE_DIRECTORIES) {
-      if (pathname.startsWith(`/${slideDir}/`)) {
-        // Return the index.html for this slide directory
-        const indexPath = `/${slideDir}/index.html`;
-        const indexUrl = new URL(indexPath, url.origin);
-
-        try {
-          // Fetch the index.html from the static assets
-          const indexRequest = new Request(indexUrl, context.request);
-          response = await context.env.ASSETS.fetch(indexRequest);
-
-          // Return 200 status with index.html content for SPA routing
-          response = new Response(response.body, {
-            status: 200,
-            statusText: 'OK',
-            headers: response.headers
-          });
-        } catch (e) {
-          // If fetching index.html fails, continue with 404
-          console.error(`Failed to fetch ${indexPath}:`, e);
-        }
-        break;
-      }
+  // Check if this is a slide directory path (but not a static file)
+  let slideDir: string | null = null;
+  for (const dir of SLIDE_DIRECTORIES) {
+    if (pathname.startsWith(`/${dir}/`) && !pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico|json)$/)) {
+      slideDir = dir;
+      break;
     }
+  }
+
+  let response: Response;
+
+  if (slideDir && !pathname.startsWith('/api/')) {
+    // For SPA routes in slide directories, return the index.html
+    const indexPath = `/${slideDir}/index.html`;
+    const indexUrl = new URL(indexPath, url.origin);
+
+    try {
+      // Fetch the index.html for this slide directory
+      response = await context.env.ASSETS.fetch(new Request(indexUrl));
+    } catch (e) {
+      console.error(`Failed to fetch ${indexPath}:`, e);
+      // Fallback to normal request handling
+      response = await context.next();
+    }
+  } else {
+    // Normal request handling for static files and API endpoints
+    response = await context.next();
   }
 
   // Security headers
