@@ -1,0 +1,19 @@
+{
+  "slides": [
+    {
+      "title": "Demo Presentation",
+      "description": "## Demo Presentation",
+      "dirName": "demo"
+    },
+    {
+      "title": "「ChatGPTくん、仕事できるの？できないの？」—— 業務で使い倒した結果報告",
+      "description": "生成AIを業務で使い倒した結果報告",
+      "dirName": "genai-in-business"
+    },
+    {
+      "title": "happyo-kun (発表くん)",
+      "description": "## happyo-kun",
+      "dirName": "intro"
+    }
+  ]
+}

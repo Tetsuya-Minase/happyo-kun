@@ -1,7 +1,7 @@
 export interface SlideMetadata {
-  name: string;
-  description: string;
-  dirName: string;
+  readonly title: string;
+  readonly description: string;
+  readonly dirName: string;
 }
 
 export interface Feature {

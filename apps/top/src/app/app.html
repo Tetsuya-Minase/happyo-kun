@@ -10,20 +10,20 @@
       <div class="slides-grid">
         @for (slide of slides(); track slide.dirName) {
           <article class="slide-card">
-            <h3>{{ slide.name }}</h3>
+            <h3>{{ slide.title }}</h3>
             <p>{{ slide.description }}</p>
             <div class="card-actions">
               <a
                 [href]="'/' + slide.dirName + '/1'"
                 class="btn btn-primary"
-                [attr.aria-label]="slide.name + 'のスライドを開く'"
+                [attr.aria-label]="slide.title + 'のスライドを開く'"
               >
                 スライドを開く
               </a>
               <a
                 [href]="'/' + slide.dirName + '/presenter/1'"
                 class="btn btn-secondary"
-                [attr.aria-label]="slide.name + 'のプレゼンターモードを開く'"
+                [attr.aria-label]="slide.title + 'のプレゼンターモードを開く'"
               >
                 プレゼンターモード
               </a>
