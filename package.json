@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "concurrently \"pnpm:dev:start\" \"pnpm:dev:slide\"",
     "build": "tsx scripts/build.ts",
+    "deploy": "wrangler pages deploy dist/browser --project-name happyo-kun --commit-message=\"Manula Deploy\"",
     "preview": "pnpm --filter start preview",
     "dev:slide": "pnpm --filter slide dev --port 3030",
     "dev:start": "pnpm --filter start dev"
@@ -15,6 +16,7 @@
     "concurrently": "^9.2.1",
     "tsx": "^4.20.5",
     "typescript": "^5.0.0",
+    "wrangler": "^4.51.0",
     "zx": "^8.8.1"
   }
 }
