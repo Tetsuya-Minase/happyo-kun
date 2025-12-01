@@ -5,7 +5,7 @@ $.verbose = true;
 
 const rootDir: string = process.cwd();
 const appsDir: string = path.join(rootDir, 'apps');
-const startDistDir: string = path.join(appsDir, 'start', 'dist');
+const distDir: string = path.join(rootDir, 'dist', 'browser');
 
 async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promise<void> {
   try {
@@ -18,7 +18,7 @@ async function copySlideDistToBuild(distDir: string, slideDirs: string[]): Promi
         continue;
       }
 
-      // slide/dist 内の各サブディレクトリ (intro, demo など) を start/dist にコピー
+      // slide/dist 内の各サブディレクトリ (intro, demo など) を top/dist にコピー
       const slideDirs = await fs.readdir(slideDistPath);
       for (const subDir of slideDirs) {
         const subDirPath = path.join(slideDistPath, subDir);
@@ -74,6 +74,50 @@ async function createUnifiedRedirectsFile(distDir: string): Promise<void> {
   }
 }
 
+async function generateSlideConfig(): Promise<void> {
+  try {
+    console.log('📋 Generating slide configuration...');
+
+    const slidesDir = path.join(appsDir, 'slide', 'slides');
+    const entries = await fs.readdir(slidesDir);
+    const slides = [];
+
+    for (const entry of entries) {
+      const entryPath = path.join(slidesDir, entry);
+      const stat = await fs.stat(entryPath);
+
+      if (stat.isDirectory()) {
+        const slidesFile = path.join(entryPath, 'slides.md');
+        if (await fs.pathExists(slidesFile)) {
+          const content = await fs.readFile(slidesFile, 'utf-8');
+
+          // フロントマターから title と info を抽出
+          const titleMatch = content.match(/^title:\s*(.+)$/m);
+          const infoMatch = content.match(/^info:\s*\|?\s*\n?\s*(.+)/m);
+
+          const slide = {
+            title: titleMatch ? titleMatch[1].trim() : entry,
+            description: infoMatch ? infoMatch[1].trim() : 'Slidevを使用したインタラクティブなプレゼンテーション',
+            dirName: entry
+          };
+
+          slides.push(slide);
+          console.log(`📋 Found slide: ${entry} (${slide.title})`);
+        }
+      }
+    }
+
+    // JSON ファイルに書き込む
+    const configPath = path.join(appsDir, 'top', 'src', 'app', 'config', 'slide.json');
+    await fs.ensureDir(path.dirname(configPath));
+    await fs.writeJSON(configPath, { slides }, { spaces: 2 });
+    console.log(`📋 Slide configuration written to ${configPath} (${slides.length} slides)`);
+
+  } catch (error) {
+    console.error('❌ Error generating slide configuration:', error);
+  }
+}
+
 
 async function main(): Promise<void> {
   try {
@@ -107,16 +151,20 @@ async function main(): Promise<void> {
       await $`pnpm --filter ${slideDir} build`;
     }
 
-    // 3. Build the start app 
-    console.log('\n📦 Building start application...');
-    await $`pnpm --filter start build`;
+    // 3. Generate slide configuration for top app
+    console.log('\n📋 Generating slide configuration...');
+    await generateSlideConfig();
 
-    // 4. Copy slide functions to start's dist for API functionality
+    // 4. Build top app
+    console.log('\n📦 Building top application...');
+    await $`pnpm --filter top build`;
+
+    // 5. Copy slide functions to start's dist for API functionality
     for (const slideDir of slideDirs) {
       const slideFunctionsPath = path.join(appsDir, slideDir, 'functions');
 
       if (await fs.pathExists(slideFunctionsPath)) {
-        const targetFunctionsPath = path.join(startDistDir, 'functions');
+        const targetFunctionsPath = path.join(distDir, 'functions');
         console.log(`📋 Copying ${slideDir} functions to integrated build...`);
         await fs.copy(slideFunctionsPath, targetFunctionsPath, { overwrite: true });
       } else {
@@ -124,14 +172,14 @@ async function main(): Promise<void> {
       }
     }
 
-    // 5. Copy slide dist files (including 404.html for SPA routing) to integrated build
-    await copySlideDistToBuild(startDistDir, slideDirs);
+    // 6. Copy slide dist files (including 404.html for SPA routing) to integrated build
+    await copySlideDistToBuild(distDir, slideDirs);
 
-    // 6. Create unified _redirects file in the root of start/dist
-    await createUnifiedRedirectsFile(startDistDir);
+    // 7. Create unified _redirects file in the root of start/dist
+    await createUnifiedRedirectsFile(distDir);
 
     console.log('\n✅ Integrated build completed successfully!');
-    console.log(`📂 Output directory: ${startDistDir}`);
+    console.log(`📂 Output directory: ${distDir}`);
 
   } catch (error) {
     console.error('\n❌ Build failed:', error);
