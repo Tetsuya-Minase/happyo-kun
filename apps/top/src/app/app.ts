@@ -6,8 +6,10 @@ import { Feature } from './models/slide.model';
   selector: 'app-root',
   imports: [],
   templateUrl: './app.html',
-  styleUrl: './app.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'block min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600'
+  }
 })
 export class App {
   private readonly slideService = inject(SlideService);
