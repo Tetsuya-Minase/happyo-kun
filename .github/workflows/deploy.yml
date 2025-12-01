@@ -44,4 +44,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           packageManager: pnpm
           wranglerVersion: '3'
-          command: pages deploy apps/start/dist --project-name=happyo-kun --commit-message="Deploy from CI (SHA:${{ github.sha }})"
+          command: pages deploy dist/browser --project-name=happyo-kun --commit-message="Deploy from CI (SHA:${{ github.sha }})"
